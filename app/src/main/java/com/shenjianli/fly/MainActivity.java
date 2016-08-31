@@ -5,18 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.shenjianli.fly.test.Test;
-import com.shenjianli.fly.test.TestApi;
 import com.shenjianli.fly.test.TestData;
-import com.shenjianli.shenlib.net.NetClient;
-import com.shenjianli.shenlib.net.RetrofitCallback;
+import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
+import com.shenjianli.shenlib.util.CustomToast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
+import rx.Subscriber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetBroadcastReceiver.NetStateChangeListener{
 
     @Bind(R.id.fly_text)
     TextView flyText;
@@ -28,27 +26,62 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        NetBroadcastReceiver.addNetStateListener(this);
     }
 
     @OnClick(R.id.fly_btn)
     public void onClick() {
-        TestApi testApi = NetClient.retrofit().create(TestApi.class);
-        Call<Test> weather = testApi.getWeather("001");
-        weather.enqueue(new RetrofitCallback<Test>() {
+//        TestApi testApi = NetClient.retrofit().create(TestApi.class);
+//        Call<Test> weather = testApi.getWeather("001");
+//        weather.enqueue(new RetrofitCallback<Test>() {
+//            @Override
+//            public void onSuccess(Test test) {
+//                if(null != test){
+//                    TestData weatherinfo = test.getWeatherinfo();
+//                    if(null != weatherinfo){
+//                        flyText.setText(weatherinfo.getCity());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String errorMsg) {
+//
+//            }
+//        });
+
+        HttpMethods.getInstance().getTopMovieNew(new Subscriber<TestData>() {
             @Override
-            public void onSuccess(Test test) {
-                if(null != test){
-                    TestData weatherinfo = test.getWeatherinfo();
-                    if(null != weatherinfo){
-                        flyText.setText(weatherinfo.getCity());
-                    }
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(TestData testData) {
+                if(null != testData){
+                    flyText.setText(testData.getCity());
                 }
             }
+        },"001");
+    }
 
-            @Override
-            public void onFail(String errorMsg) {
+    @Override
+    public void onNetChange(boolean connect) {
+        if (connect) {
+            CustomToast.show(this, "真好,网络正常啦！");
+        } else {
+            CustomToast.show(this, "糟糕，网络断开了！");
+        }
+    }
 
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       // stopService(new Intent(MainActivity.this, BackgroundMonitorService.class));
     }
 }
