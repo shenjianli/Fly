@@ -49,6 +49,4 @@ captures/
 *.jks
 .idea/dictionaries/
 .idea/vcs.xml
-app/libs/
-app/src/main/res/drawable/
-shenlib/
+
