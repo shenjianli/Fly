@@ -1,10 +1,12 @@
 package com.shenjianli.fly;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.shenjianli.fly.activity.WelcomeActivity;
 import com.shenjianli.fly.test.TestData;
 import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
 import com.shenjianli.shenlib.util.CustomToast;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 //
 //            }
 //        });
+
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
 
         HttpMethods.getInstance().getTopMovieNew(new Subscriber<TestData>() {
             @Override
