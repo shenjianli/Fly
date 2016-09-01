@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!--<include -->
+        <!--android:id="@+id/map_head_layout"-->
+        <!--layout="@layout/map_back_head_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--/>-->
+
+    <RelativeLayout
+        android:id="@+id/map_layout" 
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+        <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/map_indicator" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/icon_gcoding"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/map_layout"
+        android:orientation="vertical">
+        <ListView
+        android:id="@+id/content_listview" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </ListView>
+
+     <TextView
+            android:id="@+id/no_data_map_layout" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没有数据"
+            android:layout_centerInParent="true"
+            android:textColor="#ff0000"
+            android:textSize="20sp"
+            android:visibility="gone"
+            />
+   </RelativeLayout>
+    
+</RelativeLayout>
