@@ -32,7 +32,7 @@ public abstract class MyRetrofitCallback<T> implements Callback<HttpResult<T>> {
 			}
 		}
 		else {//200
-			if(model.getErrNo() == 0){
+			if(!model.isSuccess()){
 				onFail(model.getErrMsg());
 			}
 			else {
