@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by edianzu on 2016/8/31.
+ * Created by shenjianlis on 2016/8/31.
  */
 public interface TestApi {
 

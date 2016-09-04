@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 主Activity
- * @author ansen
- * @create time 2015-08-07
+ *
  */
 public class GuideActivity extends BaseFragmentActivity {
 	private GuideViewPager vPager;
