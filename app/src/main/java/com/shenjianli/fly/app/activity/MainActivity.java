@@ -1,5 +1,6 @@
 package com.shenjianli.fly.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.core.HttpMethods;
 import com.shenjianli.fly.model.TestData;
+import com.shenjianli.fly.test.StyleMainActivity;
 import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
 import com.shenjianli.shenlib.util.CustomToast;
 import com.shenjianli.shenlib.util.LogUtils;
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
                 }
             }
         },"001");
+        Intent intent = new Intent(this, StyleMainActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -77,6 +77,17 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lcUd8117OeO2NuOC2NNNvHrIhLM4SFEg" />
+
+        <!-- test -->
+        <activity android:name=".test.AnimationActivity"/>
+        <activity android:name=".test.StyleMainActivity"/>
+        <activity android:name=".test.LayerListActivity"/>
+        <activity android:name=".test.LineActivity"/>
+        <activity android:name=".test.OvalActivity"/>
+        <activity android:name=".test.RectangleActivity"/>
+        <activity android:name=".test.RingActivity"/>
+        <activity android:name=".test.SelectorActivity"/>
+        <activity android:name=".test.ShapeActivity"/>
     </application>
 
 </manifest>
