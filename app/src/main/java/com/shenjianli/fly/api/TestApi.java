@@ -1,6 +1,6 @@
 package com.shenjianli.fly.api;
 
-import com.shenjianli.fly.model.TestData;
+import com.shenjianli.fly.model.entities.TestData;
 import com.shenjianli.shenlib.net.HttpResult;
 
 import retrofit2.http.GET;

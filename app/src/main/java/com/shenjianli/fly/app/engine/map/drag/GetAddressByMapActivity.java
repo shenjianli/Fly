@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map.drag;
+package com.shenjianli.fly.app.engine.map.drag;
 
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
@@ -30,9 +30,9 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult.AddressComponent;
 import com.google.gson.Gson;
 import com.shenjianli.fly.R;
-import com.shenjianli.fly.app.map.MapResultData;
-import com.shenjianli.fly.app.map.ShowMapData;
-import com.shenjianli.fly.app.map.UpdateMapResultListener;
+import com.shenjianli.fly.app.engine.map.MapResultData;
+import com.shenjianli.fly.app.engine.map.ShowMapData;
+import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 import com.shenjianli.shenlib.base.BaseActivity;
 import com.shenjianli.shenlib.util.LogUtils;
 

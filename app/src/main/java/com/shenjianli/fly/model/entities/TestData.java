@@ -1,4 +1,4 @@
-package com.shenjianli.fly.model;
+package com.shenjianli.fly.model.entities;
 
 /**
  * Created by edianzu on 2016/8/31.

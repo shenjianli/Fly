@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map.drag;
+package com.shenjianli.fly.app.engine.map.drag;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,12 +8,12 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.shenjianli.fly.app.map.BaiduGeoCode;
-import com.shenjianli.fly.app.map.BaiduLocation;
-import com.shenjianli.fly.app.map.BaiduShowLabel;
-import com.shenjianli.fly.app.map.MapResultData;
-import com.shenjianli.fly.app.map.ShowMapData;
-import com.shenjianli.fly.app.map.UpdateMapResultListener;
+import com.shenjianli.fly.app.engine.map.BaiduGeoCode;
+import com.shenjianli.fly.app.engine.map.BaiduLocation;
+import com.shenjianli.fly.app.engine.map.BaiduShowLabel;
+import com.shenjianli.fly.app.engine.map.MapResultData;
+import com.shenjianli.fly.app.engine.map.ShowMapData;
+import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 import com.shenjianli.shenlib.util.LogUtils;
 
 

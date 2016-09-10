@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.guide;
+package com.shenjianli.fly.app.engine.guide;
 
 import android.content.Context;
 import android.graphics.Bitmap;

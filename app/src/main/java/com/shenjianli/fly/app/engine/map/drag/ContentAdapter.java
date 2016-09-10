@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map.drag;
+package com.shenjianli.fly.app.engine.map.drag;
 
 import android.content.Context;
 import android.graphics.Color;
