@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.shenjianli.fly.app.guide.GuideViewPager
+    <com.shenjianli.fly.app.engine.guide.GuideViewPager
         android:id="@+id/viewpager_launcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
