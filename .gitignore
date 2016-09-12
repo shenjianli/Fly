@@ -45,7 +45,8 @@ captures/
 # Intellij
 *.iml
 
-# Keystore fil
+# Keystore files
+
 .idea/dictionaries/
 .idea/vcs.xml
 

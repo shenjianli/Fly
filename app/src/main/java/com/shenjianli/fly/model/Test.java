@@ -1,5 +1,7 @@
 package com.shenjianli.fly.model;
 
+import com.shenjianli.fly.model.entities.TestData;
+
 /**
  * Created by edianzu on 2016/8/31.
  */

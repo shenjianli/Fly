@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map;
+package com.shenjianli.fly.app.engine.map;
 
 public interface UpdateMapResultListener {
 	public int LOCATION_ADDRESS = 0x2015;

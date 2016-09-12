@@ -1,7 +1,7 @@
 package com.shenjianli.fly.core;
 
 import com.shenjianli.fly.api.TestApi;
-import com.shenjianli.fly.model.TestData;
+import com.shenjianli.fly.model.entities.TestData;
 import com.shenjianli.shenlib.net.HttpResult;
 import com.shenjianli.shenlib.net.NetClient;
 

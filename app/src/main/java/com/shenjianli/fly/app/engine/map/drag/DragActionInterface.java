@@ -1,7 +1,7 @@
-package com.shenjianli.fly.app.map.drag;
+package com.shenjianli.fly.app.engine.map.drag;
 
 
-import com.shenjianli.fly.app.map.ShowMapData;
+import com.shenjianli.fly.app.engine.map.ShowMapData;
 
 public interface DragActionInterface {
 

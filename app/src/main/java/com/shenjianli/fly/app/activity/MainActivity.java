@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.core.HttpMethods;
-import com.shenjianli.fly.model.TestData;
+import com.shenjianli.fly.model.entities.TestData;
 import com.shenjianli.fly.test.StyleMainActivity;
 import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
 import com.shenjianli.shenlib.util.CustomToast;

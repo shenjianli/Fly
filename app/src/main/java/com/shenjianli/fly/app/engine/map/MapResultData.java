@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map;
+package com.shenjianli.fly.app.engine.map;
 
 public class MapResultData {
 	private boolean isSuccess = false;

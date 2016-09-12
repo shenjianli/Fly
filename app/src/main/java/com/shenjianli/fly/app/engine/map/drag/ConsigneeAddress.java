@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.map.drag;
+package com.shenjianli.fly.app.engine.map.drag;
 
 public class ConsigneeAddress {
 

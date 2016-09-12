@@ -6,4 +6,11 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <!-- 在AndroidManifest.xml文件中修改application的theme属性为上面定义的AppTheme.即可实现沉浸式状态栏 -->
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">?colorPrimaryDark</item>
+    </style>
+
 </resources>
