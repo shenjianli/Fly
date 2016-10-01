@@ -70,10 +70,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme"></activity>
 
-        <activity android:name=".app.engine.map.drag.GetAddressByMapActivity"
+        <activity android:name=".app.activity.GetAddressByMapActivity"
             android:label="@string/get_map_address">
         </activity>
-
+        <activity android:name=".app.activity.SignInOutActivity"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lcUd8117OeO2NuOC2NNNvHrIhLM4SFEg" />

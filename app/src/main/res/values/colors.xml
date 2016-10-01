@@ -4,13 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="main_bg_gray">#999999</color>
     <color name="black_overlay">#66000000</color>
 
 
     <color name="Orange">#ff5722</color>
     <color name="DeepPurple">#673AB7</color>
     <color name="DeepPurple900">#311B92</color>
-    <color name="White">#fff</color>
+    <color name="white">#fff</color>
     <color name="Gray">#888888</color>
     <color name="Gray100">#dddddd</color>
     <color name="Gray600">#999999</color>

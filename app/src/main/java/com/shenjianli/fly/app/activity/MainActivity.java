@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
             }
         },"001");
         Intent intent = new Intent(this, StyleMainActivity.class);
+        intent = new Intent(this,SignInOutActivity.class);
         startActivity(intent);
     }
 
