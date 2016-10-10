@@ -20,4 +20,5 @@ public class Constants {
 
     public static final String DEV_MODE = "dev";
 
+    public static final String TEST_MODE = "dev";
 }
