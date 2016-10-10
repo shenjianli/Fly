@@ -9,4 +9,19 @@
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="item_layout">
+
+        <attr name="item_leftImage" format="reference"/>
+
+        <attr name="item_text" format="reference|string"/>
+        <attr name="item_textColor" format="color"/>
+        <attr name="item_textSize" format="dimension"/>
+
+        <attr name="item_rightText" format="reference"/>
+        <attr name="item_rightTextColor" format="color"/>
+        <attr name="item_rightTextSize" format="dimension"/>
+
+        <attr name="item_rightImage" format="reference"/>
+
+    </declare-styleable>
 </resources>

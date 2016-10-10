@@ -1,4 +1,4 @@
-package com.shenjianli.fly.app.engine.map.drag;
+package com.shenjianli.fly.app.activity;
 
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
@@ -33,6 +33,10 @@ import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.ShowMapData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
+import com.shenjianli.fly.app.engine.map.drag.ConsigneeAddress;
+import com.shenjianli.fly.app.engine.map.drag.ContentAdapter;
+import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
+import com.shenjianli.fly.app.engine.map.drag.DragBaiduMapAction;
 import com.shenjianli.shenlib.base.BaseActivity;
 import com.shenjianli.shenlib.util.LogUtils;
 
