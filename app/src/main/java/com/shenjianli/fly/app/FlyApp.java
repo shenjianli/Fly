@@ -1,9 +1,9 @@
 package com.shenjianli.fly.app;
 
 
-import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDexApplication;
 
 import com.shenjianli.fly.R;
 import com.shenjianli.shenlib.Constants;
@@ -17,7 +17,7 @@ import com.shenjianli.shenlib.util.LogUtils;
 /**
  * Created by shenjianli on 2016/7/14.
  */
-public class FlyApp extends Application {
+public class FlyApp extends MultiDexApplication {
 
     private static FlyApp mMobileApp;
 
