@@ -7,17 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.shenjianli.fly.R;
-import com.shenjianli.fly.core.HttpMethods;
-import com.shenjianli.fly.model.entities.TestData;
 import com.shenjianli.fly.test.StyleMainActivity;
 import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
 import com.shenjianli.shenlib.util.CustomToast;
-import com.shenjianli.shenlib.util.LogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscriber;
+
 
 public class MainActivity extends AppCompatActivity implements NetBroadcastReceiver.NetStateChangeListener{
 
@@ -57,28 +54,42 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 
 //        Intent intent = new Intent(this, WelcomeActivity.class);
 //        startActivity(intent);
-
-        HttpMethods.getInstance().getTestData(new Subscriber<TestData>() {
-            @Override
-            public void onCompleted() {
-                LogUtils.i("onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                LogUtils.d("onError:" + e.getStackTrace());
-            }
-
-            @Override
-            public void onNext(TestData testData) {
-                if(null != testData){
-                    flyText.setText(testData.getCity());
-                }
-            }
-        },"001");
+//         PreHomeDataManager.getPreHomeDataManager().startPreLoadDataOfHome();
         Intent intent = new Intent(this, StyleMainActivity.class);
-        intent = new Intent(this,SignInOutActivity.class);
+//        intent = new Intent(this,SignInOutActivity.class);
         startActivity(intent);
+
+        //OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        // Log信息拦截器
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        //设置 Debug Log 模式
+//        builder.addInterceptor(loggingInterceptor);
+//        final OkHttpClient okHttpClient = builder.build();
+//
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                super.run();
+//
+//                String url = "http://m.mall.icbc.com.cn/mobile/indexSlide.jhtml";
+//                Request request = new Request.Builder()
+//                        .url(url)
+//                        .build();
+//                try {
+//                    Response response =  okHttpClient.newCall(request).execute();
+//                    if(response.isSuccessful()){
+//                        LogUtils.i(response.body().toString());
+//                    }
+//                    else {
+//                        LogUtils.i("error:" + response.message());
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+
     }
 
     @Override
