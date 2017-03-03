@@ -46,4 +46,7 @@ public class StyleMainActivity extends AppCompatActivity {
         startActivity(new Intent(this, AnimationActivity.class));
     }
 
+    public void toFont(View view){
+        startActivity(new Intent(this, FontActivity.class));
+    }
 }
