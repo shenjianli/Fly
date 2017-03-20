@@ -12,13 +12,13 @@ import java.io.Serializable;
  */
 public class Test implements Serializable{
 
-    private TestData weatherinfo;
+    private TestData testData;
 
-    public void setWeatherinfo(TestData weatherinfo) {
-        this.weatherinfo = weatherinfo;
+    public TestData getTestData() {
+        return testData;
     }
 
-    public TestData getWeatherinfo() {
-        return weatherinfo;
+    public void setTestData(TestData testData) {
+        this.testData = testData;
     }
 }

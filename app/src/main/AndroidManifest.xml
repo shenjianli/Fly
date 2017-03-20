@@ -90,6 +90,8 @@
         <activity android:name=".test.SelectorActivity"/>
         <activity android:name=".test.ShapeActivity"/>
         <activity android:name=".test.FontActivity"/>
+        <activity android:name=".test.TestActivity"/>
+        <activity android:name=".test.ScreenActivity"/>
     </application>
 
 </manifest>

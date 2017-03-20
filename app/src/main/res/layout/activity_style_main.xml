@@ -58,4 +58,11 @@
         android:layout_margin="8dp"
         android:onClick="toFont"
         android:text="FontSize" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="toScreen"
+        android:text="ScreenInfo" />
 </LinearLayout>

@@ -10,9 +10,9 @@ import com.shenjianli.fly.model.entities.TestData;
 
 /**
  * Created by shenjianli on 2016/7/8.
+ * 测试使用的本地MockService用来返回请求的json字符串
  */
-public class TestMockService extends MockService {
-
+public class RxAndroidMockService extends MockService {
     @Override
     public String getJsonData() {
 
@@ -25,14 +25,15 @@ public class TestMockService extends MockService {
         Test weatherJson = new Test();
         weatherJson.setTestData(testData);
 
-        HttpResult<TestData> result = new HttpResult<TestData>();
+        HttpResult<Test> result = new HttpResult<Test>();
         result.setReqCode(HttpResult.REQ_SUCC);
-
         result.setMsg("没有错误");
-        result.setData(testData);
+        result.setData(weatherJson);
 
         String resultStr =  new Gson().toJson(result);
         LogUtils.i("获得的json字符串为：" + result);
+
+        //返回json字符串
         return resultStr;
     }
 }

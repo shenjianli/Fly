@@ -23,6 +23,7 @@ import com.shenjianli.fly.app.util.ScreenUtils;
 import com.shenjianli.fly.model.DemoData;
 import com.shenjianli.fly.test.PreHomeDataManager;
 import com.shenjianli.fly.test.StyleMainActivity;
+import com.shenjianli.fly.test.TestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         NetBroadcastReceiver.addNetStateListener(this);
 
@@ -80,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
                         intent = new Intent(MainActivity.this, StyleMainActivity.class);
                         startActivity(intent);
                         break;
-//                    case 1:
-//                        intent = new Intent(MainActivity.this,RxAndroidActivity.class);
-//                        startActivity(intent);
-//                        break;
+                    case 1:
+                        intent = new Intent(MainActivity.this,TestActivity.class);
+                        startActivity(intent);
+                        break;
 //                    case 2:
 //                        intent = new Intent(MainActivity.this,RxJavaActivity.class);
 //                        startActivity(intent);
@@ -112,46 +114,47 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
     }
 
     private void initData() {
+
         mDemoDatas = new ArrayList<>();
 
         DemoData demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
-        demodata.setName("RecyclerView");
+        demodata.setImgId(R.drawable.me_plan);
+        demodata.setName("使用样式相关");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
-        demodata.setName("RxAndroid");
-        mDemoDatas.add(demodata);
-
-        demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
-        demodata.setName("RxJava");
-        mDemoDatas.add(demodata);
-
-        demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
-        demodata.setName("PullRefresh");
-        mDemoDatas.add(demodata);
-
-        demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setImgId(R.drawable.me_plan);
         demodata.setName("Test");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setImgId(R.drawable.me_plan);
+        demodata.setName("RxJava");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.me_plan);
+        demodata.setName("PullRefresh");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.me_plan);
+        demodata.setName("Test");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.me_plan);
         demodata.setName("MultiView");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
-        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setImgId(R.drawable.me_plan);
         demodata.setName("Adapter");
         mDemoDatas.add(demodata);
 
         for (int i = 0; i < 5; i++) {
             demodata = new DemoData();
-            demodata.setImgId(R.drawable.index_notice_click);
+            demodata.setImgId(R.drawable.me_plan);
             demodata.setName("demo" + i);
             mDemoDatas.add(demodata);
         }

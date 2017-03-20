@@ -1,36 +1,30 @@
 package com.shenjianli.fly.model;
 
-import android.text.TextUtils;
-
 public class HttpResult<T> {
 
 
-    //0表示失败，非0  其他表示成功
-    private String status;
+    public static final int REQ_SUCC = 0xbb12;
+    public static final int REQ_FAIL = REQ_SUCC + 1;
+    public static final int REQ_EXCE = REQ_FAIL + 1;
 
-    //错误编号
-	private String errNo;
-
-    //表示错误信息
-    private String errMsg;
-
-    //表示数据
+    private int reqCode;
+    private String msg;
     private T data;
 
-    public String getErrNo() {
-        return errNo;
+    public int getReqCode() {
+        return reqCode;
     }
 
-    public void setErrNo(String errNo) {
-        this.errNo = errNo;
+    public void setReqCode(int reqCode) {
+        this.reqCode = reqCode;
     }
 
-    public String getErrMsg() {
-        return errMsg;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {
@@ -39,16 +33,5 @@ public class HttpResult<T> {
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public boolean isSuccess(){
-        if(!TextUtils.isEmpty(status) && !"0".equals(status)){
-            return true;
-        }
-        return false;
     }
 }

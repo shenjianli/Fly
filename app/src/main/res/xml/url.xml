@@ -5,4 +5,9 @@
         Expires="300"
         NetType="get"
         MockClass="com.shenjianli.fly.mock.TestMockService"/>
+
+    <Node
+        Key="/shenjianli/rxandroid"
+        Expires="300"
+        MockClass="com.shenjianli.fly.mock.RxAndroidMockService"/>
 </url>
