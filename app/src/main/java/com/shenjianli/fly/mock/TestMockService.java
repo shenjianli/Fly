@@ -1,11 +1,11 @@
 package com.shenjianli.fly.mock;
 
 import com.google.gson.Gson;
+import com.shen.netclient.net.MockService;
+import com.shen.netclient.util.LogUtils;
+import com.shenjianli.fly.model.HttpResult;
 import com.shenjianli.fly.model.Test;
 import com.shenjianli.fly.model.entities.TestData;
-import com.shenjianli.shenlib.net.HttpResult;
-import com.shenjianli.shenlib.net.mock.MockService;
-import com.shenjianli.shenlib.util.LogUtils;
 
 
 /**

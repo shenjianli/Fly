@@ -1,23 +1,19 @@
 package com.shenjianli.shenlib.net;
 
+import com.squareup.okhttp.ResponseBody;
+
 import java.io.IOException;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 public abstract class RetrofitCallback<T> implements Callback<T> {
 
-	@Override
-	public void onFailure(Call<T> arg0, Throwable arg1) {
-		onFail(arg1.getMessage());
-	}
 
 	@Override
-	public void onResponse(Call<T> arg0, Response<T> response) {
+	public void onResponse(Response<T> response, Retrofit retrofit) {
 		T model = response.body();
 		if(null == model){
 			// 404 or the response cannot be converted to User.
@@ -35,6 +31,11 @@ public abstract class RetrofitCallback<T> implements Callback<T> {
 		else {//200
 			onSuccess(model);
 		}
+	}
+
+	@Override
+	public void onFailure(Throwable t) {
+		onFail(t.getMessage());
 	}
 	
 	public abstract void onSuccess(T t);

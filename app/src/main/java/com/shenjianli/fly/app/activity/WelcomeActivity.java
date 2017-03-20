@@ -7,10 +7,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
-import com.shenjianli.shenlib.base.BaseActivity;
-import com.shenjianli.shenlib.util.LogUtils;
-import com.shenjianli.shenlib.util.SharedPreUtil;
+import com.shenjianli.fly.app.base.BaseActivity;
+import com.shenjianli.fly.app.util.SharedPreUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

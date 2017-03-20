@@ -1,27 +1,26 @@
 package com.shenjianli.shenlib.net.interceptor;
 
-import com.shenjianli.shenlib.BuildConfig;
 import com.shenjianli.shenlib.net.mock.MockService;
 import com.shenjianli.shenlib.net.mock.URLData;
 import com.shenjianli.shenlib.net.mock.UrlConfigManager;
 import com.shenjianli.shenlib.util.LogUtils;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Protocol;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.Protocol;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /** * Created by shenjianli on 2016/7/8.
  */
-public class MockServerInterceptor implements Interceptor{
+public class MockServerInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response response = null;
         if(UrlConfigManager.MockServiceEnable) {
-            String key = chain.request().url().uri().getPath();
+            String key = chain.request().url().getPath();
             URLData urlData = UrlConfigManager.getUrlConfigManager().findURL(key);
             if(null != urlData){
                if(null != urlData.getMockClass()){

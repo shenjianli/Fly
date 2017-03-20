@@ -1,23 +1,24 @@
 package com.shenjianli.fly.app;
 
 
+
+import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.shen.netclient.NetClient;
+import com.shen.netclient.engine.NetClientLib;
+import com.shen.netclient.util.FileUtils;
+import com.shen.netclient.util.LogUtils;
+import com.shenjianli.fly.BuildConfig;
 import com.shenjianli.fly.R;
-import com.shenjianli.shenlib.Constants;
-import com.shenjianli.shenlib.LibApp;
-import com.shenjianli.shenlib.base.ActivityManager;
-import com.shenjianli.shenlib.exception.CrashHandler;
-import com.shenjianli.shenlib.util.FileUtils;
-import com.shenjianli.shenlib.util.LogUtils;
-
 
 /**
  * Created by shenjianli on 2016/7/14.
  */
-public class FlyApp extends MultiDexApplication {
+public class FlyApp extends Application {
 
     private static FlyApp mMobileApp;
 
@@ -26,16 +27,16 @@ public class FlyApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        LibApp.getLibInstance().setMobileContext(this);
-        if(FileUtils.getProperties(this, R.raw.mobile)){
-            String mode = FileUtils.getPropertyValueByKey("mode");
-            LogUtils.i("开发模式为：" + mode);
-            if(Constants.DEV_MODE.equals(mode)){
-                LibApp.getLibInstance().setLogEnable(true);
-                LibApp.getLibInstance().setUrlConfigManager(R.xml.url);
-            }
-        }
-        LibApp.getLibInstance().setBeanFactoryConfig(R.raw.bean);
+
+        Stetho.initializeWithDefaults(this);
+
+        NetClient.addNetworkInterceptor(new StethoInterceptor());
+
+        NetClientLib.getLibInstance().setMobileContext(this);
+
+        initByGradleFile();
+
+        NetClientLib.getLibInstance().setBeanFactoryConfig(R.raw.bean);
         //BeanFactory.getBeanFactory().initBeanFactory(R.raw.bean);
        // BeanFactory.getBeanFactory().initBeanFactory("bean");
 
@@ -48,6 +49,52 @@ public class FlyApp extends MultiDexApplication {
 
     public static FlyApp getAppInstance(){
         return  mMobileApp;
+    }
+
+
+    /*
+   根据主项目中的gradle配置文件开初始化不同的开发模式
+    */
+    private void initByGradleFile() {
+
+        if(Constants.TEST_MODE.equals(BuildConfig.MODE)){
+            NetClientLib.getLibInstance().setLogEnable(true);
+            NetClientLib.getLibInstance().setUrlConfigManager(R.xml.url);
+        }
+        else if(Constants.DEV_MODE.equals(BuildConfig.MODE))
+        {
+            NetClientLib.getLibInstance().setLogEnable(true);
+            NetClientLib.getLibInstance().setServerBaseUrl(BuildConfig.SERVER_URL);
+        }
+        else if(Constants.RELEASE_MODE.equals(BuildConfig.MODE)){
+            NetClientLib.getLibInstance().setLogEnable(false);
+            NetClientLib.getLibInstance().setServerBaseUrl(BuildConfig.SERVER_URL);
+        }
+    }
+
+
+    /*
+    根据Raw中的mobile配置文件来初始化开发模式
+     */
+    private void initByRawConfigFile() {
+        if(FileUtils.getProperties(this, R.raw.mobile)){
+            String mode = FileUtils.getPropertyValueByKey("mode");
+            String baseUrl = FileUtils.getPropertyValueByKey("baseUrl");
+            LogUtils.i("开发模式为：" + mode);
+            if(Constants.TEST_MODE.equals(mode)){
+                NetClientLib.getLibInstance().setLogEnable(true);
+                NetClientLib.getLibInstance().setUrlConfigManager(R.xml.url);
+            }
+            else if(Constants.DEV_MODE.equals(BuildConfig.MODE))
+            {
+                NetClientLib.getLibInstance().setLogEnable(true);
+                NetClientLib.getLibInstance().setServerBaseUrl(baseUrl);
+            }
+            else if(Constants.RELEASE_MODE.equals(BuildConfig.MODE)){
+                NetClientLib.getLibInstance().setLogEnable(false);
+                NetClientLib.getLibInstance().setServerBaseUrl(baseUrl);
+            }
+        }
     }
 
     @Override

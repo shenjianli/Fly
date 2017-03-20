@@ -6,7 +6,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.shenjianli.shenlib.util.LogUtils;
+import com.shen.netclient.util.LogUtils;
 
 public class BaiduLocation {
 

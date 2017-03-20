@@ -11,10 +11,10 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 
+import com.shen.netclient.util.FileUtils;
 import com.shenjianli.fly.R;
-import com.shenjianli.shenlib.base.BaseActivity;
-import com.shenjianli.shenlib.util.FileUtils;
-import com.shenjianli.shenlib.util.SharedPreUtil;
+import com.shenjianli.fly.app.base.BaseActivity;
+import com.shenjianli.fly.app.util.SharedPreUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +49,7 @@ public class AdActivity extends BaseActivity {
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
+							goToMain();
 						}
 					}
 				}

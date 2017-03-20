@@ -1,13 +1,13 @@
 package com.shenjianli.fly.test;
 
 
+import com.shen.netclient.NetClient;
+import com.shen.netclient.engine.RetrofitCallback;
+import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.api.HomeService;
 import com.shenjianli.fly.model.SlideRes;
-import com.shenjianli.shenlib.net.NetClient;
-import com.shenjianli.shenlib.net.RetrofitCallback;
-import com.shenjianli.shenlib.util.LogUtils;
 
-import retrofit.Call;
+import retrofit2.Call;
 
 
 public class PreHomeDataManager {

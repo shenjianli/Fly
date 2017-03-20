@@ -14,7 +14,7 @@ import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
 import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.shenjianli.shenlib.util.LogUtils;
+import com.shen.netclient.util.LogUtils;
 
 import java.util.List;
 

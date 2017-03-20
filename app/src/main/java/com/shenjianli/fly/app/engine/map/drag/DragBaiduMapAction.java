@@ -8,13 +8,13 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.app.engine.map.BaiduGeoCode;
 import com.shenjianli.fly.app.engine.map.BaiduLocation;
 import com.shenjianli.fly.app.engine.map.BaiduShowLabel;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.ShowMapData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
-import com.shenjianli.shenlib.util.LogUtils;
 
 
 @SuppressLint("ClickableViewAccessibility")

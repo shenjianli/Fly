@@ -1,21 +1,20 @@
 package com.shenjianli.shenlib.net;
 
+import com.squareup.okhttp.ResponseBody;
+
 import java.io.IOException;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 
 public abstract class MyRetrofitCallback<T> implements Callback<HttpResult<T>> {
 
-	@Override
 	public void onFailure(Call<HttpResult<T>> arg0, Throwable arg1) {
 		onFail(arg1.getMessage());
 	}
 
-	@Override
 	public void onResponse(Call<HttpResult<T>> arg0, Response<HttpResult<T>> response) {
 		HttpResult<T> model = response.body();
 		if(null == model){

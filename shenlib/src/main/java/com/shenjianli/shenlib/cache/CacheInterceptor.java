@@ -3,15 +3,16 @@ package com.shenjianli.shenlib.cache;
 import com.shenjianli.shenlib.LibApp;
 import com.shenjianli.shenlib.util.AppUtils;
 import com.shenjianli.shenlib.util.LogUtils;
+import com.squareup.okhttp.CacheControl;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
 
-public class CacheInterceptor implements Interceptor{
+
+public class CacheInterceptor implements Interceptor {
 
 	@Override
 	public Response intercept(Chain chain) throws IOException {

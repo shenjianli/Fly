@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.shenjianli.fly.R;
+import com.shenjianli.fly.app.base.BaseActivity;
 import com.shenjianli.fly.app.engine.map.BaiduLocationAction;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
-import com.shenjianli.shenlib.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

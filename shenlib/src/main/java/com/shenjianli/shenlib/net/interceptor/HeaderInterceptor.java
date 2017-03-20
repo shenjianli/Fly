@@ -1,13 +1,15 @@
 package com.shenjianli.shenlib.net.interceptor;
 
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import java.io.IOException;
 
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
-public class HeaderInterceptor implements Interceptor{
+
+public class HeaderInterceptor implements Interceptor {
 
 	@Override
 	public Response intercept(Chain chain) throws IOException {

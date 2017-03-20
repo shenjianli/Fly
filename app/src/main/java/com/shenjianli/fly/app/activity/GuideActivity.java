@@ -9,14 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.shenjianli.fly.R;
+import com.shenjianli.fly.app.base.BaseFragmentActivity;
 import com.shenjianli.fly.app.engine.guide.BaseFragmentAdapter;
 import com.shenjianli.fly.app.engine.guide.GuideViewPager;
 import com.shenjianli.fly.app.engine.guide.LauncherBaseFragment;
 import com.shenjianli.fly.app.engine.guide.PrivateMessageLauncherFragment;
 import com.shenjianli.fly.app.engine.guide.RewardLauncherFragment;
 import com.shenjianli.fly.app.engine.guide.StereoscopicLauncherFragment;
-import com.shenjianli.shenlib.base.BaseFragmentActivity;
-import com.shenjianli.shenlib.util.SharedPreUtil;
+import com.shenjianli.fly.app.util.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.List;

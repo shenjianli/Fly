@@ -1,6 +1,7 @@
 package com.shenjianli.fly.mock;
 
-import com.shenjianli.shenlib.net.mock.MockService;
+
+import com.shen.netclient.net.MockService;
 
 /**
  * Created by shenjianli on 2016/7/14.

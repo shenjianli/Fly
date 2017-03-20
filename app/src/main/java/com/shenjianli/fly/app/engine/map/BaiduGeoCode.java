@@ -10,7 +10,8 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.shenjianli.shenlib.util.LogUtils;
+import com.shen.netclient.util.LogUtils;
+
 
 public class BaiduGeoCode {
 	

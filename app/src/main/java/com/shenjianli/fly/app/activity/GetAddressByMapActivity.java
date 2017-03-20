@@ -29,7 +29,9 @@ import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult.AddressComponent;
 import com.google.gson.Gson;
+import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
+import com.shenjianli.fly.app.base.BaseActivity;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.ShowMapData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
@@ -37,8 +39,6 @@ import com.shenjianli.fly.app.engine.map.drag.ConsigneeAddress;
 import com.shenjianli.fly.app.engine.map.drag.ContentAdapter;
 import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
 import com.shenjianli.fly.app.engine.map.drag.DragBaiduMapAction;
-import com.shenjianli.shenlib.base.BaseActivity;
-import com.shenjianli.shenlib.util.LogUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

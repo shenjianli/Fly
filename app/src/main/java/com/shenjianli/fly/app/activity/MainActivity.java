@@ -1,27 +1,51 @@
 package com.shenjianli.fly.app.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
+import com.shenjianli.fly.app.DividerDecoration;
+import com.shenjianli.fly.app.adapter.RecylerViewAdapter;
+import com.shenjianli.fly.app.receiver.NetBroadcastReceiver;
+import com.shenjianli.fly.app.util.CustomToast;
+import com.shenjianli.fly.app.util.DeviceUtils;
+import com.shenjianli.fly.app.util.NetUtils;
+import com.shenjianli.fly.app.util.ScreenUtils;
+import com.shenjianli.fly.model.DemoData;
+import com.shenjianli.fly.test.PreHomeDataManager;
 import com.shenjianli.fly.test.StyleMainActivity;
-import com.shenjianli.shenlib.receiver.NetBroadcastReceiver;
-import com.shenjianli.shenlib.util.CustomToast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends AppCompatActivity implements NetBroadcastReceiver.NetStateChangeListener{
+public class MainActivity extends AppCompatActivity implements NetBroadcastReceiver.NetStateChangeListener {
 
     @Bind(R.id.fly_text)
     TextView flyText;
     @Bind(R.id.fly_btn)
     Button flyBtn;
+    @Bind(R.id.recyclerView)
+    RecyclerView flyRecyclerView;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout flySwipeRefreshLayout;
+
+
+    RecylerViewAdapter adapter;
+    List<DemoData> mDemoDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +53,142 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         NetBroadcastReceiver.addNetStateListener(this);
+
+
+        LogUtils.i(ScreenUtils.getScreenInfo(this).toString());
+        LogUtils.i(NetUtils.getWifiDeviceInfo(this));
+        LogUtils.i(DeviceUtils.getPhoneInfo(this));
+
+        initData();
+
+        initAdapter();
+
+        initRecylerView();
+
+        PreHomeDataManager.getPreHomeDataManager().startPreLoadDataOfHome();
+
     }
+
+    private void initAdapter() {
+        adapter = new RecylerViewAdapter(this,mDemoDatas);
+        adapter.setOnDemoClickListener(new RecylerViewAdapter.OnDemoClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent;
+                switch (position){
+                    case 0:
+                        intent = new Intent(MainActivity.this, StyleMainActivity.class);
+                        startActivity(intent);
+                        break;
+//                    case 1:
+//                        intent = new Intent(MainActivity.this,RxAndroidActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 2:
+//                        intent = new Intent(MainActivity.this,RxJavaActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 3:
+//                        intent = new Intent(MainActivity.this, RefreshMainActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 4:
+//                        intent = new Intent(MainActivity.this, TestActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 5:
+//                        intent = new Intent(MainActivity.this, MultiViewMainActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 6:
+//                        intent = new Intent(MainActivity.this, ScreenActivity.class);
+//                        startActivity(intent);
+//                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    private void initData() {
+        mDemoDatas = new ArrayList<>();
+
+        DemoData demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("RecyclerView");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("RxAndroid");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("RxJava");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("PullRefresh");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("Test");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("MultiView");
+        mDemoDatas.add(demodata);
+
+        demodata = new DemoData();
+        demodata.setImgId(R.drawable.index_notice_click);
+        demodata.setName("Adapter");
+        mDemoDatas.add(demodata);
+
+        for (int i = 0; i < 5; i++) {
+            demodata = new DemoData();
+            demodata.setImgId(R.drawable.index_notice_click);
+            demodata.setName("demo" + i);
+            mDemoDatas.add(demodata);
+        }
+    }
+
+    private void initRecylerView() {
+        // 线性布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        // 设置布局管理器
+        flyRecyclerView.setLayoutManager(linearLayoutManager);
+        DividerDecoration decoration = new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
+        Drawable drawable = getResources().getDrawable(R.drawable.divider_single);
+        decoration.setDivider(drawable);
+
+//        decoration.getItemOffsets();
+        flyRecyclerView.addItemDecoration(decoration);
+        //recyclerView.addItemDecoration(new SpacesItemDecoration(10));
+        // recyclerView.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
+        flyRecyclerView.setAdapter(adapter);
+
+        // 模拟下拉刷新
+        flySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        flySwipeRefreshLayout.setRefreshing(false);
+                        adapter.notifyDataSetChanged();
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+
 
     @OnClick(R.id.fly_btn)
     public void onClick() {
@@ -104,6 +263,6 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       // stopService(new Intent(MainActivity.this, BackgroundMonitorService.class));
+        // stopService(new Intent(MainActivity.this, BackgroundMonitorService.class));
     }
 }
