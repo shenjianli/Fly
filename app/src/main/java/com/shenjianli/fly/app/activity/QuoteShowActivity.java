@@ -208,7 +208,7 @@ public class QuoteShowActivity extends BaseActivity implements CountTimer.CountD
 //                        Drawable drawable = new BitmapDrawable(QuoteShowActivity.this.getResources(),bitmap);
 //                        flyMotivationalQuotesSumLayout.setBackground(drawable);
 //                    }
-                    ACache.get(QuoteShowActivity.this).put("quote_bg_bitmap",bitmap);
+                    //ACache.get(QuoteShowActivity.this).put("quote_bg_bitmap",bitmap);
 
                 }
                 LogUtils.i("下载图片成功");
