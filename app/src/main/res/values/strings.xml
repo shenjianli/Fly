@@ -193,4 +193,8 @@
     <string name="suggestion_values">Values:</string>
     <string name="suggestion_values_land">Values Land:</string>
     <string name="screen_size">ScreenSize(inch):</string>
+
+
+    <string name="fly_hint_info">在漫长的人生旅途中，会经历多种失败，困难和挫折，但是，这一切同时也是难得的磨炼心志的机会，促使你发愤图强，通过诚实的努力，去实现自己的梦想。</string>
+    <string name="fly_hint_title">追求人间正道</string>
 </resources>

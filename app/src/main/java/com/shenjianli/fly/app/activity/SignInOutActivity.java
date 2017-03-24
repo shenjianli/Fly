@@ -51,4 +51,12 @@ public class SignInOutActivity extends BaseActivity implements UpdateMapResultLi
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != baiduLocationAction){
+            baiduLocationAction.destory();
+        }
+    }
 }

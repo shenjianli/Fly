@@ -6,6 +6,7 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.shen.netclient.NetClient;
@@ -44,6 +45,7 @@ public class FlyApp extends Application {
             CrashHandler crashHandler = CrashHandler.getInstance();
             crashHandler.init(this);
         }
+        Fresco.initialize(this);
         mMobileApp = this;
     }
 

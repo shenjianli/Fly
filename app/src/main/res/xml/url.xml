@@ -10,4 +10,9 @@
         Key="/shenjianli/rxandroid"
         Expires="300"
         MockClass="com.shenjianli.fly.mock.RxAndroidMockService"/>
+
+    <Node
+        Key="/quote/query"
+        Expires="300"
+        MockClass="com.shenjianli.fly.mock.QuoteMockService"/>
 </url>

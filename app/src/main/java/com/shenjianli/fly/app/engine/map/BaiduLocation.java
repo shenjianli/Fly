@@ -109,10 +109,12 @@ public class BaiduLocation {
 	}
 
 	public void destory() {
-		// TODO Auto-generated method stub
+		mLocationResultListener = null;
 		if(null != mLocClient){
-			mLocClient.stop();
 			mLocClient.unRegisterLocationListener(myListener);
+			myListener = null;
+			mLocClient.stop();
+			mLocClient = null;
 		}
 	}
 }

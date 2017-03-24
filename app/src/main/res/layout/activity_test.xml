@@ -20,6 +20,7 @@
         android:layout_below="@id/city_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取网络数据"/>
+        android:text="获取网络数据"
+        style="@style/Widget.AppCompat.Button"/>
 
 </RelativeLayout>

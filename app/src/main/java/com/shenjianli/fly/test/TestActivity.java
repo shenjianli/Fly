@@ -10,7 +10,7 @@ import com.shen.netclient.engine.RetrofitCallback;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.api.TestApi;
-import com.shenjianli.fly.app.engine.DataView;
+import com.shenjianli.fly.app.engine.view.DataView;
 import com.shenjianli.fly.app.engine.presenter.TestPresenter;
 import com.shenjianli.fly.model.Test;
 

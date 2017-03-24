@@ -1,7 +1,6 @@
 package com.shenjianli.fly.app.engine;
-
-import com.shen.netclient.net.ApiException;
 import com.shen.netclient.util.LogUtils;
+import com.shenjianli.fly.core.ApiException;
 import com.shenjianli.fly.model.HttpResult;
 
 import rx.functions.Func1;

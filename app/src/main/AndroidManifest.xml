@@ -92,6 +92,7 @@
         <activity android:name=".test.FontActivity"/>
         <activity android:name=".test.TestActivity"/>
         <activity android:name=".test.ScreenActivity"/>
+        <activity android:name=".app.activity.QuoteShowActivity"/>
     </application>
 
 </manifest>

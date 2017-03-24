@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fly_motivational_quotes_sum_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#aaff0000">
+
+    <TextView
+        android:id="@+id/fly_motivational_quotes_enter_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_rectangle_with_corners_apha_black"
+        android:gravity="center"
+        android:paddingBottom="3dp"
+        android:paddingLeft="26dp"
+        android:paddingRight="26dp"
+        android:paddingTop="3dp"
+        android:text="5"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/fly_motivational_quotes_enter_time_tv"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp">
+
+
+        <TextView
+            android:id="@+id/fly_app_logo_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:drawableLeft="@drawable/me_plan"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:text="FLY"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/fly_motivational_quotes_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/fly_hint_title"
+            android:textSize="30sp" />
+
+
+
+        <TextView
+            android:id="@+id/fly_motivational_quotes_content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:lineSpacingExtra="5dp"
+            android:layout_below="@id/fly_motivational_quotes_title_tv"
+            android:text="@string/fly_hint_info"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

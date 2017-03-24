@@ -86,14 +86,14 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
                         intent = new Intent(MainActivity.this,TestActivity.class);
                         startActivity(intent);
                         break;
-//                    case 2:
-//                        intent = new Intent(MainActivity.this,RxJavaActivity.class);
-//                        startActivity(intent);
-//                        break;
-//                    case 3:
-//                        intent = new Intent(MainActivity.this, RefreshMainActivity.class);
-//                        startActivity(intent);
-//                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this,SignInOutActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, QuoteShowActivity.class);
+                        startActivity(intent);
+                        break;
 //                    case 4:
 //                        intent = new Intent(MainActivity.this, TestActivity.class);
 //                        startActivity(intent);
@@ -129,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("RxJava");
+        demodata.setName("签到");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("PullRefresh");
+        demodata.setName("励志广告");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();

@@ -39,5 +39,12 @@ public class BaiduLocationAction implements BaiduLocation.LocationResultListener
         }
     }
 
+    public void destory(){
+        mUpdateMapResultListener = null;
+        if(null != mBaiduLocation){
+            mBaiduLocation.destory();
+            mBaiduLocation = null;
+        }
+    }
 
 }
