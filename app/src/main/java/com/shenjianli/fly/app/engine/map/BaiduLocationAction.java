@@ -3,6 +3,8 @@ package com.shenjianli.fly.app.engine.map;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+
 /**
  * Created by edianzu on 2016/9/30.
  */
@@ -24,6 +26,11 @@ public class BaiduLocationAction implements BaiduLocation.LocationResultListener
         else{
             Toast.makeText(mContext, "很报歉，没有找到定位相关信息", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void updateLocationResult(BDLocation location) {
+
     }
 
     public BaiduLocationAction(Context context, UpdateMapResultListener resultListener){

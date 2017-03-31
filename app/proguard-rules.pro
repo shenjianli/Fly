@@ -19,3 +19,9 @@
 -keep class com.ihongqiqu.** { *; }
 -keepclassmembers class com.ihongqiqu.** { *; }
 -dontwarn com.ihongqiqu.**
+
+
+## 百度地图
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**

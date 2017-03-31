@@ -10,4 +10,6 @@ public class Constants {
    public static final String RELEASE_MODE = "release";
 
    public static final String TEST_MODE = "test";
+
+   public static final int CIRCL_RADIUS = 500;
 }

@@ -3,6 +3,7 @@ package com.shenjianli.fly.app.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.base.BaseActivity;
 import com.shenjianli.fly.app.engine.map.BaiduLocationAction;
@@ -50,6 +51,11 @@ public class SignInOutActivity extends BaseActivity implements UpdateMapResultLi
                 }
             }
         }
+    }
+
+    @Override
+    public void updateLocationResult(BDLocation location) {
+
     }
 
     @Override

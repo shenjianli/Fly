@@ -48,7 +48,7 @@ android {
 
     productFlavors {
         Dev{
-            applicationId "com.shenjianli.lib"
+            applicationId "com.shenjianli.fly"
             manifestPlaceholders = [app_name:"开发版" ,icon: "@mipmap/ic_launcher",CHANNEL_VALUE:"Dev"]
             //在java代码中具体的使用方式为：context.getResources().getString(R.string.strKey);
             resValue("string" , "strKey","dev版本")
@@ -58,7 +58,7 @@ android {
             buildConfigField("String","SERVER_URL","\"http://m.dev.shen.com.cn/\"")
         }
         DevTest{
-            applicationId "com.shenjianli.lib.test"
+            applicationId "com.shenjianli.fly"
             manifestPlaceholders = [app_name:"自测版" ,icon: "@mipmap/ic_launcher",CHANNEL_VALUE:"Test"]
             //在java代码中具体的使用方式为：context.getResources().getString(R.string.strKey);
             resValue("string" , "strKey","beta版本")
@@ -70,7 +70,7 @@ android {
 
         }
         Releases{
-            applicationId "com.shenjianli.lib.release"
+            applicationId "com.shenjianli.fly"
             manifestPlaceholders = [app_name:"正式版" ,icon: "@mipmap/ic_launcher_releases",CHANNEL_VALUE:"Releases"]
             resValue("string" , "strKey","release版本")
             resValue ('string','isDebug','false')
@@ -114,6 +114,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.3.1'
     compile 'com.android.support:appcompat-v7:23.4.0'

@@ -34,7 +34,7 @@ public class BaiduLocation {
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(1000);
+		option.setScanSpan(5000);
 		option.setIsNeedAddress(true);
 		mLocClient.setLocOption(option);
 	}
@@ -51,7 +51,11 @@ public class BaiduLocation {
 			mLocClient.stop();
 		}
 	}
-	
+
+	public void refresh() {
+		mLocClient.stop();
+	}
+
 	/**
 	 * 定位SDK监听函数
 	 */
@@ -88,11 +92,12 @@ public class BaiduLocation {
 //				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 //				mBaiduMap.animateMapStatus(u);
 //			}
+			LogUtils.i( TAG + " 定位成功！");
 			if(null != mLocationResultListener){
-				LogUtils.i( TAG + " 定位成功！");
-				if(null != mLocClient){
-					mLocClient.stop();
-				}
+//				if(null != mLocClient){
+//					mLocClient.stop();
+//				}
+				mLocationResultListener.updateLocationResult(location);
 				LogUtils.i( "定位到的地址为：" + addStr + location.getProvince() + location.getCity() + location.getDistrict() + location.getStreet());
 				mLocationResultListener.updateLocationResult(mLat,mLog, addStr,true);
 			}
@@ -105,6 +110,8 @@ public class BaiduLocation {
 	public interface LocationResultListener{
 		
 		public void updateLocationResult(double lat, double log, String address, boolean isSuccess);
+
+		public void updateLocationResult(BDLocation location);
 		
 	}
 

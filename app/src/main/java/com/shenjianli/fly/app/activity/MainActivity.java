@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.DividerDecoration;
+import com.shenjianli.fly.app.LocationService;
 import com.shenjianli.fly.app.adapter.RecylerViewAdapter;
 import com.shenjianli.fly.app.receiver.NetBroadcastReceiver;
 import com.shenjianli.fly.app.util.CustomToast;
@@ -94,10 +95,10 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
                         intent = new Intent(MainActivity.this, QuoteShowActivity.class);
                         startActivity(intent);
                         break;
-//                    case 4:
-//                        intent = new Intent(MainActivity.this, TestActivity.class);
-//                        startActivity(intent);
-//                        break;
+                    case 4:
+                        intent = new Intent(MainActivity.this, GetAddressByMapActivity.class);
+                        startActivity(intent);
+                        break;
 //                    case 5:
 //                        intent = new Intent(MainActivity.this, MultiViewMainActivity.class);
 //                        startActivity(intent);
@@ -139,12 +140,12 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("Test");
+        demodata.setName("地图选址");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("MultiView");
+        demodata.setName("选择");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();
@@ -217,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 //        Intent intent = new Intent(this, WelcomeActivity.class);
 //        startActivity(intent);
 //         PreHomeDataManager.getPreHomeDataManager().startPreLoadDataOfHome();
-        Intent intent = new Intent(this, StyleMainActivity.class);
+        Intent intent = new Intent(this, LocationService.class);
 //        intent = new Intent(this,SignInOutActivity.class);
-        startActivity(intent);
+        startService(intent);
 
         //OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // Log信息拦截器

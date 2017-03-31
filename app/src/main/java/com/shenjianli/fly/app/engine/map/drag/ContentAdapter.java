@@ -16,11 +16,12 @@ import java.util.List;
 
 public class ContentAdapter extends BaseAdapter {
 
+	private int selectPos = 0;
 	private List<?> mContent;
 	private Context mContext;
 	 private LayoutInflater mInflater = null;
-	public ContentAdapter(Context context,List<?> content)
-	{
+
+	public ContentAdapter(Context context,List<?> content) {
 		this.mContent = content;
 		this.mContext = context;
 		this.mInflater = LayoutInflater.from(context);
@@ -61,7 +62,7 @@ public class ContentAdapter extends BaseAdapter {
          {
              holder = (ViewHolder)convertView.getTag();
          }
-         if(position == 0)
+         if(position == selectPos)
          {
         	 holder.title.setTextColor(Color.RED);
          }
@@ -73,6 +74,10 @@ public class ContentAdapter extends BaseAdapter {
          holder.info.setText((String)((PoiInfo)mContent.get(position)).address);
          
          return convertView;
+	}
+
+	public void setSelectPos(int selectPos) {
+		this.selectPos = selectPos;
 	}
 
 	//ViewHolder静态类

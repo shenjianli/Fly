@@ -21,5 +21,9 @@ public interface DragActionInterface {
 	public void searchNearBy(double latitude, double longitude);
 
 	public void destoryMap();
+
+	public void showCircleByLatAndLog(double latitude, double longitude,int radius);
+
+	public void refreshMap();
 	
 }
