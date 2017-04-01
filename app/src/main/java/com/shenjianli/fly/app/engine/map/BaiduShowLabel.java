@@ -169,7 +169,7 @@ public class BaiduShowLabel {
      */
 	public void showMapCircleByRadius(double latitude, double longitude, int radius) {
 		//showMapCircleByInfoWindow(latitude, longitude, radius);
-		showMapCircle(latitude,longitude,radius);
+		showMapCircleByInfoWindow(latitude,longitude,radius);
 	}
 
 	private void showMapCircleByInfoWindow(double latitude, double longitude, int radius) {
