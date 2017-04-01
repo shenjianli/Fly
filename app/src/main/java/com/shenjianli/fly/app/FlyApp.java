@@ -1,11 +1,11 @@
 package com.shenjianli.fly.app;
 
 
-
 import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -29,7 +29,11 @@ public class FlyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+
         Stetho.initializeWithDefaults(this);
+
+        // 在使用SDK各组件之前初始化context信息，传入ApplicationContext
+        SDKInitializer.initialize(getApplicationContext());
 
         NetClient.addNetworkInterceptor(new StethoInterceptor());
 

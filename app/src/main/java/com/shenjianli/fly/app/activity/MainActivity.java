@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
 //         PreHomeDataManager.getPreHomeDataManager().startPreLoadDataOfHome();
         Intent intent = new Intent(this, LocationService.class);
 //        intent = new Intent(this,SignInOutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startService(intent);
 
         //OkHttpClient.Builder builder = new OkHttpClient.Builder();
