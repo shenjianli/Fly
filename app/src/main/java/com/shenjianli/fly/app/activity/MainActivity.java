@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.DividerDecoration;
 import com.shenjianli.fly.app.LocationService;
 import com.shenjianli.fly.app.adapter.RecylerViewAdapter;
+import com.shenjianli.fly.app.base.BaseActivity;
 import com.shenjianli.fly.app.receiver.NetBroadcastReceiver;
 import com.shenjianli.fly.app.util.CustomToast;
 import com.shenjianli.fly.app.util.DeviceUtils;
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends AppCompatActivity implements NetBroadcastReceiver.NetStateChangeListener {
+public class MainActivity extends BaseActivity implements NetBroadcastReceiver.NetStateChangeListener {
 
     @Bind(R.id.fly_text)
     TextView flyText;
@@ -268,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements NetBroadcastRecei
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         // stopService(new Intent(MainActivity.this, BackgroundMonitorService.class));
     }
 }

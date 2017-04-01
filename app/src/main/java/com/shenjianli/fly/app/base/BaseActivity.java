@@ -1,16 +1,16 @@
 package com.shenjianli.fly.app.base;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.app.ActivityManager;
 
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
 	private final String TAG = getClass().getSimpleName();
 

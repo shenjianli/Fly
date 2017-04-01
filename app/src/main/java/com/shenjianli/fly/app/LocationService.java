@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.shen.netclient.util.FileUtils;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.activity.MainActivity;
@@ -32,6 +33,7 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        LogUtils.i("location serviced onBind()");
         return null;
     }
 
@@ -46,7 +48,8 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtils.v("ServiceDemo onStartCommand");
-        return super.onStartCommand(intent, flags, startId);
+        FileUtils.writeFile("location serviced onStartCommand()".getBytes(),"icbc","shen.txt");
+        return START_STICKY;
     }
 
 
@@ -57,7 +60,9 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
 
     @Override
     public boolean onUnbind(Intent intent) {
+        LogUtils.i("location serviced onUnbind()");
         return super.onUnbind(intent);
+
     }
 
 
@@ -65,6 +70,8 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LogUtils.i("location serviced onDestory()");
+        FileUtils.writeFile("location serviced onDestory()".getBytes(),"icbc","shen.txt");
     }
 
     @Override
@@ -110,7 +117,7 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
                 .setPriority(Notification.PRIORITY_HIGH) //设置该通知优先级
                 //.setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消
-                .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
+                .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                 .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
                 //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
                 .setSmallIcon(R.drawable.icon_gold)
@@ -122,5 +129,6 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
 
         NotificationManager manger= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manger.notify(0, notification);
+
     }
 }
