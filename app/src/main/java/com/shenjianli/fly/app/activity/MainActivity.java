@@ -99,10 +99,10 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
                         intent = new Intent(MainActivity.this, GetAddressByMapActivity.class);
                         startActivity(intent);
                         break;
-//                    case 5:
-//                        intent = new Intent(MainActivity.this, MultiViewMainActivity.class);
-//                        startActivity(intent);
-//                        break;
+                    case 5:
+                        intent = new Intent(MainActivity.this, LocationActivity.class);
+                        startActivity(intent);
+                        break;
 //                    case 6:
 //                        intent = new Intent(MainActivity.this, ScreenActivity.class);
 //                        startActivity(intent);
@@ -145,7 +145,7 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("选择");
+        demodata.setName("定位");
         mDemoDatas.add(demodata);
 
         demodata = new DemoData();

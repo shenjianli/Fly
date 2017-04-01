@@ -98,12 +98,12 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
         <service android:name=".app.LocationService"  android:enabled="true" android:process=":location"></service>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ulLmX46b7xnblVP30Tjm9ajDm1j1QAMm"/>
 
 
-        <!-- test -->
         <activity android:name=".test.AnimationActivity"/>
         <activity android:name=".test.StyleMainActivity"/>
         <activity android:name=".test.LayerListActivity"/>
@@ -117,6 +117,7 @@
         <activity android:name=".test.TestActivity"/>
         <activity android:name=".test.ScreenActivity"/>
         <activity android:name=".app.activity.QuoteShowActivity"/>
+        <activity android:name=".app.activity.LocationActivity"/>
     </application>
 
 </manifest>
