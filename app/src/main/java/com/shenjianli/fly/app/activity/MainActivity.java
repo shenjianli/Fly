@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
                         startActivity(intent);
                         break;
                     case 4:
-                        intent = new Intent(MainActivity.this, GetAddressByMapActivity.class);
+                        intent = new Intent(MainActivity.this, InputMapActivity.class);
                         startActivity(intent);
                         break;
                     case 5:

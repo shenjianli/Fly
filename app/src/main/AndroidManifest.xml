@@ -116,8 +116,12 @@
         <activity android:name=".test.FontActivity"/>
         <activity android:name=".test.TestActivity"/>
         <activity android:name=".test.ScreenActivity"/>
+
         <activity android:name=".app.activity.QuoteShowActivity"/>
         <activity android:name=".app.activity.LocationActivity"/>
+        <activity android:name=".app.activity.InputMapActivity"/>
+
+
     </application>
 
 </manifest>

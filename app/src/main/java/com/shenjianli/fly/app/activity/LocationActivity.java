@@ -35,7 +35,6 @@ import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.Constants;
 import com.shenjianli.fly.app.base.BaseActivity;
 import com.shenjianli.fly.app.engine.map.MapResultData;
-import com.shenjianli.fly.app.engine.map.ShowMapData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
 import com.shenjianli.fly.app.engine.map.drag.DragBaiduMapAction;
@@ -87,32 +86,10 @@ public class LocationActivity extends BaseActivity implements
         initReceiver();
     }
 
-    private String mHotelStreet = "";
-    private String mCityStr = "";
-    private String mAreaStr = "";
-    private String mHotelName = "";
-    private String mChoice = "";
-    private ShowMapData mMapData;
-
     /**
      * 初始化参数
      */
     private void initParamData() {
-
-        Intent intent = getIntent();
-
-        mCityStr = intent.getStringExtra("city");
-        mHotelStreet = intent.getStringExtra("street");
-        mAreaStr = intent.getStringExtra("area");
-        mHotelName = intent.getStringExtra("name");
-        mChoice = intent.getStringExtra("choice");
-
-        mMapData = new ShowMapData();
-        mMapData.setHotelAddrCity(mCityStr);
-        mMapData.setHotelAddrCounty(mAreaStr);
-        mMapData.setHotelAddrStreet(mHotelStreet);
-        mMapData.setHotelName(mHotelName);
-        mMapData.setMapLevel(16.0f);
 
     }
 
@@ -235,7 +212,7 @@ public class LocationActivity extends BaseActivity implements
         super.onPause();
     }
 
-    // 是否显示了酒店位置标签
+    // 是否显示位置标签
     private boolean hasShowLabel = false;
 
     @Override
