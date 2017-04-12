@@ -120,6 +120,7 @@
         <activity android:name=".app.activity.QuoteShowActivity"/>
         <activity android:name=".app.activity.LocationActivity"/>
         <activity android:name=".app.activity.InputMapActivity"/>
+        <activity android:name=".app.activity.GreenDaoActivity"/>
 
 
     </application>

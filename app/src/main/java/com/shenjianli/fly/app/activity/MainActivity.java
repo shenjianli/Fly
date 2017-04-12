@@ -103,10 +103,10 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
                         intent = new Intent(MainActivity.this, LocationActivity.class);
                         startActivity(intent);
                         break;
-//                    case 6:
-//                        intent = new Intent(MainActivity.this, ScreenActivity.class);
-//                        startActivity(intent);
-//                        break;
+                    case 6:
+                        intent = new Intent(MainActivity.this, GreenDaoActivity.class);
+                        startActivity(intent);
+                        break;
                     default:
                         break;
                 }
@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
 
         demodata = new DemoData();
         demodata.setImgId(R.drawable.me_plan);
-        demodata.setName("Adapter");
+        demodata.setName("GreenDao");
         mDemoDatas.add(demodata);
 
         for (int i = 0; i < 5; i++) {
