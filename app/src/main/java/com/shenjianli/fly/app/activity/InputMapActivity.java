@@ -94,6 +94,7 @@ public class InputMapActivity extends BaseActivity implements
 
     private void initData() {
         currentLocEntity = new LocationEntity();
+        locEntityDao = FlyApp.getAppInstance().getDaoSession().getLocationEntityDao();
     }
 
     private String mHotelStreet = "";
@@ -262,8 +263,6 @@ public class InputMapActivity extends BaseActivity implements
             mDragMapActionInterface.startInitMap();
             showSiginCircleInMap();
         }
-
-        locEntityDao = FlyApp.getAppInstance().getDaoSession().getLocationEntityDao();
     }
 
     private void showSiginCircleInMap() {
