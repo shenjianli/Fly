@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,30 +25,30 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult.AddressComponent;
-import com.baidu.mapapi.utils.DistanceUtil;
 import com.google.gson.Gson;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.Constants;
+import com.shenjianli.fly.app.FlyApp;
 import com.shenjianli.fly.app.base.BaseActivity;
+import com.shenjianli.fly.app.db.LocationEntityDao;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.ShowMapData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 import com.shenjianli.fly.app.engine.map.drag.ConsigneeAddress;
 import com.shenjianli.fly.app.engine.map.drag.ContentAdapter;
 import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
-import com.shenjianli.fly.app.engine.map.drag.DragBaiduMapAction;
+import com.shenjianli.fly.app.engine.map.drag.InputMapAction;
 import com.shenjianli.fly.core.ACache;
+import com.shenjianli.fly.model.LocationEntity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -62,12 +61,6 @@ public class InputMapActivity extends BaseActivity implements
 
     private final String TAG = getClass().getSimpleName();
 
-    @Bind(R.id.map_location_write_btn)
-    Button mapLocationWriteBtn;
-    @Bind(R.id.map_location_tv)
-    TextView mapLocationTv;
-    @Bind(R.id.map_location_refresh_btn)
-    Button mapLocationRefreshBtn;
     /**
      * MapView 是地图主控件
      */
@@ -82,18 +75,25 @@ public class InputMapActivity extends BaseActivity implements
 
     private final int mDelayTime = 800;
     private final int mShowHotelLabelReqCode = 1000;
-    private final int BAI_DU_RESULT_CODE = 1548;
 
+    LocationEntityDao locEntityDao;
+    LocationEntity locEntity;
 
     private double currentLat;
     private double currentLog;
 
+    private LocationEntity currentLocEntity;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initParamData();
+        initData();
         initMap();
         initReceiver();
+    }
+
+    private void initData() {
+        currentLocEntity = new LocationEntity();
     }
 
     private String mHotelStreet = "";
@@ -127,7 +127,7 @@ public class InputMapActivity extends BaseActivity implements
      */
     private void initMap() {
 
-        setContentView(R.layout.activity_map_address);
+        setContentView(R.layout.activity_map_input);
         ButterKnife.bind(this);
         // 获取地图控件引用
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -163,6 +163,15 @@ public class InputMapActivity extends BaseActivity implements
                     currentLog = poiInfo.location.longitude;
                     currentLat = poiInfo.location.latitude;
 
+                    currentLocEntity.setLog(poiInfo.location.longitude);
+                    currentLocEntity.setLat(poiInfo.location.latitude);
+                    currentLocEntity.setProvince(mAddressComponent.province);
+                    currentLocEntity.setCity(mAddressComponent.city);
+                    currentLocEntity.setDistrict(mAddressComponent.district);
+                    currentLocEntity.setStreet(mAddressComponent.street);
+                    currentLocEntity.setAddress(poiInfo.address);
+
+
                     LogUtils.i("点击的地址的经度：" + poiInfo.location.longitude + "纬度：" + poiInfo.location.latitude);
 
                     String detailAddress = poiInfo.address;
@@ -187,6 +196,7 @@ public class InputMapActivity extends BaseActivity implements
                             }
                         }
                         address.setConsigneeDetailAddress(detailAddress);
+
                         try {
                             //String result = JSONObject.toJSONString(address);
                             String result = new Gson().toJson(address);
@@ -235,12 +245,7 @@ public class InputMapActivity extends BaseActivity implements
                 currentLat = arg0.target.latitude;
                 currentLog = arg0.target.longitude;
 
-
-                LatLng latLng = new LatLng(40.053275, 116.294587);
-                double distance = DistanceUtil.getDistance(latLng, arg0.target);
-                LogUtils.i("到定位的距离：" + distance + "米");
                 if (null != mDragMapActionInterface) {
-                    isLocationByAddress = false;
                     mDragMapActionInterface.searchNearBy(arg0.target.latitude,
                             arg0.target.longitude);
                 }
@@ -252,20 +257,25 @@ public class InputMapActivity extends BaseActivity implements
             }
         });
 
-        mDragMapActionInterface = new DragBaiduMapAction(mMapView, this, this);
+        mDragMapActionInterface = new InputMapAction(mMapView, this, this);
         if (null != mDragMapActionInterface) {
             mDragMapActionInterface.startInitMap();
             showSiginCircleInMap();
         }
+
+        locEntityDao = FlyApp.getAppInstance().getDaoSession().getLocationEntityDao();
     }
 
     private void showSiginCircleInMap() {
-        String sign_lat = ACache.get(this).getAsString("sign_lat");
-        String sign_log = ACache.get(this).getAsString("sign_log");
-        if (!TextUtils.isEmpty(sign_lat) && !TextUtils.isEmpty(sign_log)) {
-            currentLat = Double.parseDouble(sign_lat);
-            currentLog = Double.parseDouble(sign_log);
-            mDragMapActionInterface.showCircleByLatAndLog(currentLat, currentLog, Constants.CIRCL_RADIUS);
+
+        Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+        if(null != inputIndex){
+            List<LocationEntity> locationEntities = locEntityDao.loadAll();
+            if(null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM ){
+                for (LocationEntity locationEntity:locationEntities) {
+                    mDragMapActionInterface.showCircleByLatAndLog(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS);
+                }
+            }
         }
     }
 
@@ -283,25 +293,56 @@ public class InputMapActivity extends BaseActivity implements
         registerReceiver(mReceiver, iFilter);
     }
 
-    private boolean isHasSigin = false;
-
+    private final int MAP_SHOW_MAX_NUM = 5;
+    private final Long MAP_START_INDEX = 1000000001L;
     @OnClick({R.id.map_location_write_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_location_write_btn:
 
-                ACache.get(this).put("sign_lat", String.valueOf(currentLat));
-                ACache.get(this).put("sign_log", String.valueOf(currentLog));
-                mDragMapActionInterface.showCircleByLatAndLog(currentLat, currentLog, Constants.CIRCL_RADIUS);
+                Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+                if(null != inputIndex){
+                    List<LocationEntity> locationEntities = locEntityDao.loadAll();
+                    if(null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM ){
+
+                        updateLocationToDb(inputIndex);
+                    }
+                    else {
+                        writeLocationToDb(inputIndex);
+                    }
+                    if((inputIndex + 1) >= (MAP_START_INDEX + MAP_SHOW_MAX_NUM)){
+                        inputIndex = MAP_START_INDEX -1;
+                    }
+                    ACache.get(this).put("input_index",inputIndex + 1);
+                }
+                else {
+                    writeLocationToDb(MAP_START_INDEX);
+                    ACache.get(this).put("input_index",MAP_START_INDEX + 1);
+                }
 
                 break;
         }
     }
 
+    private void updateLocationToDb(Long inputIndex) {
+        if(null != currentLocEntity) {
+            currentLocEntity.setId(inputIndex);
+            locEntityDao.update(currentLocEntity);
+            mDragMapActionInterface.showCircleByLatAndLog(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS);
+        }
+
+    }
+
+    private void writeLocationToDb(Long map_start_index) {
+        if(null != currentLocEntity) {
+            currentLocEntity.setId(map_start_index);
+            locEntityDao.insert(currentLocEntity);//添加一个
+            mDragMapActionInterface.showCircleByLatAndLog(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS);
+        }
+    }
+
     @OnClick(R.id.map_location_refresh_btn)
     public void onClick() {
-        mDragMapActionInterface.refreshMap();
-        showSiginCircleInMap();
         mDragMapActionInterface.showMapLabelByLocation();
     }
 
@@ -362,7 +403,7 @@ public class InputMapActivity extends BaseActivity implements
         unregisterReceiver(mReceiver);
     }
 
-    private boolean isLocationByAddress = false;
+
     private DragActionInterface mDragMapActionInterface;
     private DragSearchHandler mSearchHandler = new DragSearchHandler(this);
 
@@ -402,6 +443,8 @@ public class InputMapActivity extends BaseActivity implements
                         updateReverseGeoCodeResult((ReverseGeoCodeResult) data
                                 .getResult());
                         break;
+                    case SHOW_LABEL:
+                        hasShowLabel = true;
                     default:
                         break;
                 }
@@ -422,7 +465,15 @@ public class InputMapActivity extends BaseActivity implements
 
     @Override
     public void updateLocationResult(BDLocation location) {
-
+        if(null != location){
+            currentLocEntity.setLog(location.getLongitude());
+            currentLocEntity.setLat(location.getLatitude());
+            currentLocEntity.setProvince(location.getProvince());
+            currentLocEntity.setCity(location.getCity());
+            currentLocEntity.setDistrict(location.getDistrict());
+            currentLocEntity.setStreet(location.getStreet());
+            currentLocEntity.setAddress(location.getAddrStr());
+        }
     }
 
 
@@ -452,7 +503,6 @@ public class InputMapActivity extends BaseActivity implements
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (null != mDragMapActionInterface) {
-                            isLocationByAddress = false;
                             mDragMapActionInterface.showMapLabelByLocation();
                         }
                         dialog.dismiss();
@@ -470,11 +520,22 @@ public class InputMapActivity extends BaseActivity implements
             adapter.setSelectPos(0);
             List<PoiInfo> content = result.getPoiList();
             mAddressComponent = result.getAddressDetail();
+
             LogUtils.i("-------------------"
                     + mAddressComponent.province + ":" + mAddressComponent.city
                     + ":" + mAddressComponent.district + ":"
                     + mAddressComponent.street);
             LogUtils.i("地址为：" + result.getAddress());
+
+
+            currentLocEntity.setLog(result.getLocation().longitude);
+            currentLocEntity.setLat(result.getLocation().latitude);
+            currentLocEntity.setProvince(mAddressComponent.province);
+            currentLocEntity.setCity(mAddressComponent.city);
+            currentLocEntity.setDistrict(mAddressComponent.district);
+            currentLocEntity.setStreet(mAddressComponent.street);
+            currentLocEntity.setAddress(result.getAddress());
+
             if (null != content && content.size() > 0) {
                 mContent.addAll(result.getPoiList());
 

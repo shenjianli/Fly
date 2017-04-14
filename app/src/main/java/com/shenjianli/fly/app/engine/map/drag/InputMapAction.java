@@ -20,7 +20,7 @@ import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 
 
 @SuppressLint("ClickableViewAccessibility")
-public class DragBaiduMapAction implements DragActionInterface, BaiduGeoCode.GeoCodeResultListener, BaiduLocation.LocationResultListener {
+public class InputMapAction implements DragActionInterface, BaiduGeoCode.GeoCodeResultListener, BaiduLocation.LocationResultListener {
 
     private final String TAG = getClass().getSimpleName();
     private Context mContext;
@@ -29,21 +29,14 @@ public class DragBaiduMapAction implements DragActionInterface, BaiduGeoCode.Geo
     private BaiduShowLabel mBaiduShowLabel;
     private BaiduLocation mBaiduLocation;
     private BaiduGeoCode mBaiduGeoCode;
+
     private MapView mMapView;
 
-    private boolean isUpdateLocInTime = true;
 
-    public DragBaiduMapAction(View mapView, Context context, UpdateMapResultListener resultListener) {
+    public InputMapAction(View mapView, Context context, UpdateMapResultListener resultListener) {
         this.mContext = context;
         this.mMapView = (MapView) mapView;
         this.mUpdateMapResultListener = resultListener;
-    }
-
-    public DragBaiduMapAction(View mapView, Context context, UpdateMapResultListener resultListener,boolean isUpdateLocInTime) {
-        this.mContext = context;
-        this.mMapView = (MapView) mapView;
-        this.mUpdateMapResultListener = resultListener;
-        this.isUpdateLocInTime = isUpdateLocInTime;
     }
 
 
@@ -205,11 +198,15 @@ public class DragBaiduMapAction implements DragActionInterface, BaiduGeoCode.Geo
         } else {
             Toast.makeText(mContext, "很报歉，没有找到定位相关信息", Toast.LENGTH_SHORT).show();
         }
+        if(null != mBaiduLocation){
+            mBaiduLocation.stopLocation();
+        }
+
     }
 
     @Override
     public void updateLocationResult(BDLocation location) {
-        if(null == location || !isUpdateLocInTime){
+        if(null == location ){
             return ;
         }
 
