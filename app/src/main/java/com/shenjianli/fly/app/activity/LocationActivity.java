@@ -33,15 +33,19 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
 import com.shenjianli.fly.app.Constants;
+import com.shenjianli.fly.app.FlyApp;
 import com.shenjianli.fly.app.base.BaseActivity;
+import com.shenjianli.fly.app.db.LocationEntityDao;
 import com.shenjianli.fly.app.engine.map.MapResultData;
 import com.shenjianli.fly.app.engine.map.UpdateMapResultListener;
 import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
 import com.shenjianli.fly.app.engine.map.drag.DragBaiduMapAction;
 import com.shenjianli.fly.app.util.CustomToast;
 import com.shenjianli.fly.core.ACache;
+import com.shenjianli.fly.model.LocationEntity;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,7 +78,6 @@ public class LocationActivity extends BaseActivity implements
     private final int mShowHotelLabelReqCode = 1000;
 
 
-
     private double currentLat;
     private double currentLog;
 
@@ -82,8 +85,13 @@ public class LocationActivity extends BaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initParamData();
+        initData();
         initMap();
         initReceiver();
+    }
+
+    private void initData() {
+        locEntityDao = FlyApp.getAppInstance().getDaoSession().getLocationEntityDao();
     }
 
     /**
@@ -131,12 +139,15 @@ public class LocationActivity extends BaseActivity implements
      * 显示签到圆形区域
      */
     private void showSiginCircleInMap() {
-        String sign_lat = ACache.get(this).getAsString("sign_lat");
-        String sign_log = ACache.get(this).getAsString("sign_log");
-        if (!TextUtils.isEmpty(sign_lat) && !TextUtils.isEmpty(sign_log)) {
-            currentLat = Double.parseDouble(sign_lat);
-            currentLog = Double.parseDouble(sign_log);
-            mDragMapActionInterface.showCircleByLatAndLog(currentLat, currentLog, Constants.CIRCL_RADIUS);
+
+        Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+        if(null != inputIndex){
+            List<LocationEntity> locationEntities = locEntityDao.loadAll();
+            if(null != locationEntities && locationEntities.size() > 0 ){
+                for (LocationEntity locationEntity:locationEntities) {
+                    mDragMapActionInterface.showCircleByLatAndLog(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS);
+                }
+            }
         }
     }
 
@@ -156,7 +167,7 @@ public class LocationActivity extends BaseActivity implements
 
     private boolean isHasSigin = false;
 
-    @OnClick({ R.id.map_location_sinin_btn ,R.id.map_location_refresh_btn})
+    @OnClick({R.id.map_location_sinin_btn, R.id.map_location_refresh_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_location_sinin_btn:
@@ -173,12 +184,36 @@ public class LocationActivity extends BaseActivity implements
                     CustomToast.show(this, "签到成功");
                     isHasSigin = true;
                 }
+                signInAction();
                 break;
             case R.id.map_location_refresh_btn:
                 mDragMapActionInterface.refreshMap();
                 showSiginCircleInMap();
                 mDragMapActionInterface.showMapLabelByLocation();
                 break;
+        }
+    }
+
+    private void signInAction() {
+
+
+        Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+
+        if(null != inputIndex){
+            List<LocationEntity> locationEntities = locEntityDao.loadAll();
+            if(null != locationEntities && locationEntities.size() > 0 ){
+                LatLng currentLoc = new LatLng(currentLat, currentLog);
+                for (LocationEntity locationEntity:locationEntities) {
+                    LatLng iputLoc = new LatLng(locationEntity.getLat(), locationEntity.getLog());
+                    double distance = DistanceUtil.getDistance(currentLoc, iputLoc);
+                    if (distance > Constants.CIRCL_RADIUS) {
+
+                    } else if (distance >= 0) {
+                        CustomToast.show(this, "签到成功");
+                        isHasSigin = true;
+                    }
+                }
+            }
         }
     }
 
@@ -258,8 +293,8 @@ public class LocationActivity extends BaseActivity implements
             if (null != mActivityReference) {
                 if (msg.what == activity.mShowHotelLabelReqCode) {
                     if (null != activity.mDragMapActionInterface) {
-                            activity.mDragMapActionInterface
-                                    .showMapLabelByLocation();
+                        activity.mDragMapActionInterface
+                                .showMapLabelByLocation();
                     } else {
                         LogUtils.i("mDragMapActionInterface 操作对象为空");
                     }
@@ -271,6 +306,7 @@ public class LocationActivity extends BaseActivity implements
 
     /**
      * 更新地图结果数据
+     *
      * @param data
      */
     @Override
@@ -295,25 +331,43 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
+    LocationEntityDao locEntityDao;
+
     /**
      * 实时更新用户的定位信息
+     *
      * @param location 百度地图返回的定位信息对象
      */
     @Override
     public void updateLocationResult(BDLocation location) {
         if (null != location) {
             LogUtils.i("定位成功" + "   纬度：" + location.getLatitude() + "  经度：" + location.getLongitude());
-            String sign_lat = ACache.get(this).getAsString("sign_lat");
-            String sign_log = ACache.get(this).getAsString("sign_log");
-            if (!TextUtils.isEmpty(sign_lat) && !TextUtils.isEmpty(sign_log)) {
-                double v = Double.parseDouble(sign_lat);
-                double v1 = Double.parseDouble(sign_log);
-                LatLng latLng = new LatLng(v, v1);
-                LatLng latLng1 = new LatLng(location.getLatitude(), location.getLongitude());
-                double distance = DistanceUtil.getDistance(latLng, latLng1);
-                if (0 <= distance && distance <= Constants.CIRCL_RADIUS && !isHasSigin) {
-                    CustomToast.show(this, "已经进入签到区，请您签到！");
-                    showNotificationInfo();
+//            String sign_lat = ACache.get(this).getAsString("sign_lat");
+//            String sign_log = ACache.get(this).getAsString("sign_log");
+//            if (!TextUtils.isEmpty(sign_lat) && !TextUtils.isEmpty(sign_log)) {
+//                double v = Double.parseDouble(sign_lat);
+//                double v1 = Double.parseDouble(sign_log);
+//                LatLng latLng = new LatLng(v, v1);
+//                LatLng latLng1 = new LatLng(location.getLatitude(), location.getLongitude());
+//                double distance = DistanceUtil.getDistance(latLng, latLng1);
+//                if (0 <= distance && distance <= Constants.CIRCL_RADIUS && !isHasSigin) {
+//                    CustomToast.show(this, "已经进入签到区，请您签到！");
+//                    showNotificationInfo();
+//                }
+//            }
+            Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+            if (null != inputIndex) {
+                List<LocationEntity> locationEntities = locEntityDao.loadAll();
+                if (null != locationEntities && locationEntities.size() > 0) {
+                    for (LocationEntity locationEntity : locationEntities) {
+                        LatLng latLng = new LatLng(locationEntity.getLat(), locationEntity.getLog());
+                        LatLng latLng1 = new LatLng(location.getLatitude(), location.getLongitude());
+                        double distance = DistanceUtil.getDistance(latLng, latLng1);
+                        if (0 <= distance && distance <= Constants.CIRCL_RADIUS && !isHasSigin) {
+                            CustomToast.show(this, "已经进入签到区，请您签到！");
+                            showNotificationInfo();
+                        }
+                    }
                 }
             }
         }
@@ -323,12 +377,12 @@ public class LocationActivity extends BaseActivity implements
      * 到达签到区域，发送通知提示签到
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void showNotificationInfo(){
+    private void showNotificationInfo() {
 
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        Notification notification= new Notification.Builder(this)
+        Notification notification = new Notification.Builder(this)
                 .setContentTitle("签到提醒")
                 .setContentText("已经进入签到区，请您签到！")
                 .setTicker("签到通知来啦") //通知首次出现在通知栏，带上升动画效果的
@@ -342,16 +396,17 @@ public class LocationActivity extends BaseActivity implements
                 .setSmallIcon(R.drawable.icon_gold)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_gold))
                 .setContentIntent(pendingIntent)
-                .setVibrate(new long[] {0,3000,3500,7000,1000,3000})//延迟0ms，然后振动3000ms，在延迟3500ms，接着在振动7000ms。
+                .setVibrate(new long[]{0, 3000, 3500, 7000, 1000, 3000})//延迟0ms，然后振动3000ms，在延迟3500ms，接着在振动7000ms。
                 .build();
-        notification.flags = Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_ONLY_ALERT_ONCE |Notification.FLAG_AUTO_CANCEL ;//用户单击通知后自动消失; //三色灯提醒，在使用三色灯提醒时候必须加该标志符,发起Notification后，铃声和震动均只执行一次;
+        notification.flags = Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_ONLY_ALERT_ONCE | Notification.FLAG_AUTO_CANCEL;//用户单击通知后自动消失; //三色灯提醒，在使用三色灯提醒时候必须加该标志符,发起Notification后，铃声和震动均只执行一次;
 
-        NotificationManager manger= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager manger = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manger.notify(0, notification);
     }
 
     /**
      * 定位失败的提示信息
+     *
      * @param result 提示信息内容
      */
     private void showLocationByAddressFail(String result) {

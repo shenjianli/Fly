@@ -270,7 +270,7 @@ public class InputMapActivity extends BaseActivity implements
         Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
         if(null != inputIndex){
             List<LocationEntity> locationEntities = locEntityDao.loadAll();
-            if(null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM ){
+            if(null != locationEntities && locationEntities.size() > 0 ){
                 for (LocationEntity locationEntity:locationEntities) {
                     mDragMapActionInterface.showCircleByLatAndLog(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS);
                 }
@@ -279,7 +279,6 @@ public class InputMapActivity extends BaseActivity implements
     }
 
     private SDKReceiver mReceiver;
-
     /**
      * 初始化广播接收
      */
