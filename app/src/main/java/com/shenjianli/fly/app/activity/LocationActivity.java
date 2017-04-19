@@ -171,19 +171,6 @@ public class LocationActivity extends BaseActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_location_sinin_btn:
-                String sign_lat = ACache.get(this).getAsString("sign_lat");
-                String sign_log = ACache.get(this).getAsString("sign_log");
-                double v = Double.parseDouble(sign_lat);
-                double v1 = Double.parseDouble(sign_log);
-                LatLng latLng = new LatLng(v, v1);
-                LatLng latLng1 = new LatLng(currentLat, currentLog);
-                double distance = DistanceUtil.getDistance(latLng, latLng1);
-                if (distance > Constants.CIRCL_RADIUS) {
-                    CustomToast.show(this, "无法签到,请到签到区域进行签到");
-                } else if (distance >= 0) {
-                    CustomToast.show(this, "签到成功");
-                    isHasSigin = true;
-                }
                 signInAction();
                 break;
             case R.id.map_location_refresh_btn:
@@ -200,20 +187,34 @@ public class LocationActivity extends BaseActivity implements
         Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
 
         if(null != inputIndex){
+            LocationEntity signLocEntity = null;
+            double minSignDistance = -1;
             List<LocationEntity> locationEntities = locEntityDao.loadAll();
             if(null != locationEntities && locationEntities.size() > 0 ){
                 LatLng currentLoc = new LatLng(currentLat, currentLog);
                 for (LocationEntity locationEntity:locationEntities) {
                     LatLng iputLoc = new LatLng(locationEntity.getLat(), locationEntity.getLog());
                     double distance = DistanceUtil.getDistance(currentLoc, iputLoc);
-                    if (distance > Constants.CIRCL_RADIUS) {
 
+                    if (distance > Constants.CIRCL_RADIUS) {
+                        LogUtils.i("");
                     } else if (distance >= 0) {
-                        CustomToast.show(this, "签到成功");
-                        isHasSigin = true;
+                        if( -1 == minSignDistance || minSignDistance > distance){
+                            minSignDistance = distance;
+                            signLocEntity = locationEntity;
+                        }
                     }
+
                 }
             }
+
+            if(null != signLocEntity){
+                CustomToast.show(this, "进行提醒成功  " + signLocEntity.getAddress());
+                isHasSigin = true;
+            }
+        }
+        else {
+            CustomToast.show(this, "请录入提醒地点");
         }
     }
 
@@ -355,6 +356,9 @@ public class LocationActivity extends BaseActivity implements
 //                    showNotificationInfo();
 //                }
 //            }
+            currentLat = location.getLatitude();
+            currentLog = location.getLongitude();
+
             Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
             if (null != inputIndex) {
                 List<LocationEntity> locationEntities = locEntityDao.loadAll();
@@ -364,7 +368,7 @@ public class LocationActivity extends BaseActivity implements
                         LatLng latLng1 = new LatLng(location.getLatitude(), location.getLongitude());
                         double distance = DistanceUtil.getDistance(latLng, latLng1);
                         if (0 <= distance && distance <= Constants.CIRCL_RADIUS && !isHasSigin) {
-                            CustomToast.show(this, "已经进入签到区，请您签到！");
+                            CustomToast.show(this, "已经进入提醒区，请注意啦！");
                             showNotificationInfo();
                         }
                     }
