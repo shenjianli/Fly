@@ -32,6 +32,7 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
         public final static Property City = new Property(5, String.class, "city", false, "sign_city");
         public final static Property District = new Property(6, String.class, "district", false, "sign_district");
         public final static Property Street = new Property(7, String.class, "street", false, "sign_street");
+        public final static Property Info = new Property(8, String.class, "info", false, "sign_info");
     }
 
 
@@ -54,7 +55,8 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
                 "\"sign_province\" TEXT," + // 4: province
                 "\"sign_city\" TEXT," + // 5: city
                 "\"sign_district\" TEXT," + // 6: district
-                "\"sign_street\" TEXT);"); // 7: street
+                "\"sign_street\" TEXT," + // 7: street
+                "\"sign_info\" TEXT);"); // 8: info
     }
 
     /** Drops the underlying database table. */
@@ -106,6 +108,11 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
         if (street != null) {
             stmt.bindString(8, street);
         }
+ 
+        String info = entity.getInfo();
+        if (info != null) {
+            stmt.bindString(9, info);
+        }
     }
 
     @Override
@@ -151,6 +158,11 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
         if (street != null) {
             stmt.bindString(8, street);
         }
+ 
+        String info = entity.getInfo();
+        if (info != null) {
+            stmt.bindString(9, info);
+        }
     }
 
     @Override
@@ -168,7 +180,8 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // province
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // city
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // district
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // street
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // street
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // info
         );
         return entity;
     }
@@ -183,6 +196,7 @@ public class LocationEntityDao extends AbstractDao<LocationEntity, Long> {
         entity.setCity(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setDistrict(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setStreet(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setInfo(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

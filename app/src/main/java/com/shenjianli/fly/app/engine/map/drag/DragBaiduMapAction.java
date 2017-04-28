@@ -130,6 +130,11 @@ public class DragBaiduMapAction implements DragActionInterface, BaiduGeoCode.Geo
     }
 
     @Override
+    public void showCircleByInfo(double latitude, double longitude, int radius, String info) {
+
+    }
+
+    @Override
     public void refreshMap() {
         mBaiduShowLabel.refresh();
         mBaiduLocation.refresh();

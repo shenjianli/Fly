@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -60,6 +62,8 @@ public class InputMapActivity extends BaseActivity implements
         UpdateMapResultListener {
 
     private final String TAG = getClass().getSimpleName();
+    @Bind(R.id.input_remind_info_et)
+    EditText inputRemindInfoEt;
 
     /**
      * MapView 是地图主控件
@@ -83,6 +87,7 @@ public class InputMapActivity extends BaseActivity implements
     private double currentLog;
 
     private LocationEntity currentLocEntity;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,17 +273,24 @@ public class InputMapActivity extends BaseActivity implements
     private void showSiginCircleInMap() {
 
         Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
-        if(null != inputIndex){
+        if (null != inputIndex) {
             List<LocationEntity> locationEntities = locEntityDao.loadAll();
-            if(null != locationEntities && locationEntities.size() > 0 ){
-                for (LocationEntity locationEntity:locationEntities) {
-                    mDragMapActionInterface.showCircleByLatAndLog(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS);
+            if (null != locationEntities && locationEntities.size() > 0) {
+                for (LocationEntity locationEntity : locationEntities) {
+                    String info = locationEntity.getInfo();
+                    if(TextUtils.isEmpty(info)){
+                        info = "提醒区域";
+                    }else {
+                        info += "区域";
+                    }
+                    mDragMapActionInterface.showCircleByInfo(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS,info);
                 }
             }
         }
     }
 
     private SDKReceiver mReceiver;
+
     /**
      * 初始化广播接收
      */
@@ -293,49 +305,53 @@ public class InputMapActivity extends BaseActivity implements
 
     private final int MAP_SHOW_MAX_NUM = 5;
     private final Long MAP_START_INDEX = 1000000001L;
+
     @OnClick({R.id.map_location_write_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_location_write_btn:
+                String info = inputRemindInfoEt.getText().toString();
+                if(TextUtils.isEmpty(info)){
+                    info = "提醒";
+                }
+                currentLocEntity.setInfo(info);
 
                 Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
-                if(null != inputIndex){
+                if (null != inputIndex) {
                     List<LocationEntity> locationEntities = locEntityDao.loadAll();
-                    if(null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM ){
+                    if (null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM) {
 
                         updateLocationToDb(inputIndex);
-                    }
-                    else {
+                    } else {
                         writeLocationToDb(inputIndex);
                     }
-                    if((inputIndex + 1) >= (MAP_START_INDEX + MAP_SHOW_MAX_NUM)){
-                        inputIndex = MAP_START_INDEX -1;
+                    if ((inputIndex + 1) >= (MAP_START_INDEX + MAP_SHOW_MAX_NUM)) {
+                        inputIndex = MAP_START_INDEX - 1;
                     }
-                    ACache.get(this).put("input_index",inputIndex + 1);
-                }
-                else {
+                    ACache.get(this).put("input_index", inputIndex + 1);
+                } else {
                     writeLocationToDb(MAP_START_INDEX);
-                    ACache.get(this).put("input_index",MAP_START_INDEX + 1);
+                    ACache.get(this).put("input_index", MAP_START_INDEX + 1);
                 }
+                info += "区域";
+                mDragMapActionInterface.showCircleByInfo(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS,info);
 
                 break;
         }
     }
 
     private void updateLocationToDb(Long inputIndex) {
-        if(null != currentLocEntity) {
+        if (null != currentLocEntity) {
             currentLocEntity.setId(inputIndex);
             locEntityDao.update(currentLocEntity);
-            mDragMapActionInterface.showCircleByLatAndLog(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS);
         }
 
     }
 
     private void writeLocationToDb(Long map_start_index) {
-        if(null != currentLocEntity) {
+        if (null != currentLocEntity) {
             currentLocEntity.setId(map_start_index);
             locEntityDao.insert(currentLocEntity);//添加一个
-            mDragMapActionInterface.showCircleByLatAndLog(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS);
         }
     }
 
@@ -354,7 +370,7 @@ public class InputMapActivity extends BaseActivity implements
             // TextView text = (TextView) findViewById(R.id.text_Info);
             // text.setTextColor(Color.RED);
             if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-                Toast.makeText(InputMapActivity.this, "key 验证出错! ",
+                Toast.makeText(InputMapActivity.this, "网络出错 ",
                         Toast.LENGTH_SHORT).show();
                 LogUtils.d(TAG + "key 验证出错! ");
             } else if (s
@@ -463,7 +479,7 @@ public class InputMapActivity extends BaseActivity implements
 
     @Override
     public void updateLocationResult(BDLocation location) {
-        if(null != location){
+        if (null != location) {
             currentLocEntity.setLog(location.getLongitude());
             currentLocEntity.setLat(location.getLatitude());
             currentLocEntity.setProvince(location.getProvince());

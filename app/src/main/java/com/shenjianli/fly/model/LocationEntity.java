@@ -35,9 +35,13 @@ public class LocationEntity {
     @Property(nameInDb = "sign_street")
     private String street;
 
-    @Generated(hash = 560828710)
+    @Property(nameInDb = "sign_info")
+    private String info;
+
+    @Generated(hash = 2055467459)
     public LocationEntity(Long id, Double log, Double lat, String address,
-            String province, String city, String district, String street) {
+            String province, String city, String district, String street,
+            String info) {
         this.id = id;
         this.log = log;
         this.lat = lat;
@@ -46,6 +50,7 @@ public class LocationEntity {
         this.city = city;
         this.district = district;
         this.street = street;
+        this.info = info;
     }
 
     @Generated(hash = 1723987110)
@@ -114,6 +119,14 @@ public class LocationEntity {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getInfo() {
+        return this.info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
 }

@@ -24,6 +24,8 @@ public interface DragActionInterface {
 
 	public void showCircleByLatAndLog(double latitude, double longitude,int radius);
 
+	public void showCircleByInfo(double latitude, double longitude, int radius, String info);
+
 	public void refreshMap();
 	
 }

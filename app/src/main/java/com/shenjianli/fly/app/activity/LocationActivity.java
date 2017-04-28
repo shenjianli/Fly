@@ -145,7 +145,13 @@ public class LocationActivity extends BaseActivity implements
             List<LocationEntity> locationEntities = locEntityDao.loadAll();
             if(null != locationEntities && locationEntities.size() > 0 ){
                 for (LocationEntity locationEntity:locationEntities) {
-                    mDragMapActionInterface.showCircleByLatAndLog(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS);
+                    String info = locationEntity.getInfo();
+                    if(TextUtils.isEmpty(info)){
+                        info = "提醒区域";
+                    }else {
+                        info += "区域";
+                    }
+                    mDragMapActionInterface.showCircleByInfo(locationEntity.getLat(), locationEntity.getLog(), Constants.CIRCL_RADIUS,info);
                 }
             }
         }
@@ -212,6 +218,9 @@ public class LocationActivity extends BaseActivity implements
                 CustomToast.show(this, "进行提醒成功  " + signLocEntity.getAddress());
                 isHasSigin = true;
             }
+            else {
+                CustomToast.show(this, "未到提醒地点，请到提醒地点进行操作");
+            }
         }
         else {
             CustomToast.show(this, "请录入提醒地点");
@@ -229,7 +238,7 @@ public class LocationActivity extends BaseActivity implements
             // TextView text = (TextView) findViewById(R.id.text_Info);
             // text.setTextColor(Color.RED);
             if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-                Toast.makeText(LocationActivity.this, "key 验证出错! ",
+                Toast.makeText(LocationActivity.this, "网络出错",
                         Toast.LENGTH_SHORT).show();
                 LogUtils.d(TAG + "key 验证出错! ");
             } else if (s

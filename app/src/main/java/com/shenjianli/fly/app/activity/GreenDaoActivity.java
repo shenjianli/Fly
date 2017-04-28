@@ -67,6 +67,7 @@ public class GreenDaoActivity extends BaseActivity {
      */
     private void addDate() {
         locEntity = new LocEntity();
+
         locEntity.setId(100001L);
         locEntity.setNickname("cqtddt");
         locEntity.setUsername("shenjianli001");
