@@ -26,9 +26,11 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult.AddressComponent;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.google.gson.Gson;
 import com.shen.netclient.util.LogUtils;
 import com.shenjianli.fly.R;
@@ -43,6 +45,7 @@ import com.shenjianli.fly.app.engine.map.drag.ConsigneeAddress;
 import com.shenjianli.fly.app.engine.map.drag.ContentAdapter;
 import com.shenjianli.fly.app.engine.map.drag.DragActionInterface;
 import com.shenjianli.fly.app.engine.map.drag.InputMapAction;
+import com.shenjianli.fly.app.util.CustomToast;
 import com.shenjianli.fly.core.ACache;
 import com.shenjianli.fly.model.LocationEntity;
 
@@ -310,34 +313,60 @@ public class InputMapActivity extends BaseActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_location_write_btn:
-                String info = inputRemindInfoEt.getText().toString();
-                if(TextUtils.isEmpty(info)){
-                    info = "提醒";
-                }
-                currentLocEntity.setInfo(info);
+                if(canInputTipLoc()){
+                    String info = inputRemindInfoEt.getText().toString();
+                    if(TextUtils.isEmpty(info)){
+                        info = "提醒";
+                    }
+                    currentLocEntity.setInfo(info);
 
-                Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
-                if (null != inputIndex) {
-                    List<LocationEntity> locationEntities = locEntityDao.loadAll();
-                    if (null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM) {
+                    Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+                    if (null != inputIndex) {
+                        List<LocationEntity> locationEntities = locEntityDao.loadAll();
+                        if (null != locationEntities && locationEntities.size() >= MAP_SHOW_MAX_NUM) {
 
-                        updateLocationToDb(inputIndex);
+                            updateLocationToDb(inputIndex);
+                        } else {
+                            writeLocationToDb(inputIndex);
+                        }
+                        if ((inputIndex + 1) >= (MAP_START_INDEX + MAP_SHOW_MAX_NUM)) {
+                            inputIndex = MAP_START_INDEX - 1;
+                        }
+                        ACache.get(this).put("input_index", inputIndex + 1);
                     } else {
-                        writeLocationToDb(inputIndex);
+                        writeLocationToDb(MAP_START_INDEX);
+                        ACache.get(this).put("input_index", MAP_START_INDEX + 1);
                     }
-                    if ((inputIndex + 1) >= (MAP_START_INDEX + MAP_SHOW_MAX_NUM)) {
-                        inputIndex = MAP_START_INDEX - 1;
-                    }
-                    ACache.get(this).put("input_index", inputIndex + 1);
-                } else {
-                    writeLocationToDb(MAP_START_INDEX);
-                    ACache.get(this).put("input_index", MAP_START_INDEX + 1);
+                    info += "区域";
+                    mDragMapActionInterface.showCircleByInfo(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS,info);
+                    inputRemindInfoEt.setText("");
+                    currentLocEntity = new LocationEntity();
                 }
-                info += "区域";
-                mDragMapActionInterface.showCircleByInfo(currentLocEntity.getLat(), currentLocEntity.getLog(), Constants.CIRCL_RADIUS,info);
-
                 break;
         }
+    }
+
+    private boolean canInputTipLoc() {
+        if(null == currentLocEntity || !currentLocEntity.isValid()){
+            CustomToast.show(this,"请选择其他提醒点");
+            return false;
+        }
+        Long inputIndex = (Long) ACache.get(this).getAsObject("input_index");
+        if(null != inputIndex){
+            List<LocationEntity> locationEntities = locEntityDao.loadAll();
+            if(null != locationEntities && locationEntities.size() > 0 ){
+                LatLng currentLoc = new LatLng(currentLocEntity.getLat(), currentLocEntity.getLog());
+                for (LocationEntity locationEntity:locationEntities) {
+                    LatLng iputLoc = new LatLng(locationEntity.getLat(), locationEntity.getLog());
+                    double distance = DistanceUtil.getDistance(currentLoc, iputLoc);
+                    if (distance >= 0 && distance < 2 * Constants.CIRCL_RADIUS) {
+                        CustomToast.show(this,"请选择其他提醒点");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private void updateLocationToDb(Long inputIndex) {

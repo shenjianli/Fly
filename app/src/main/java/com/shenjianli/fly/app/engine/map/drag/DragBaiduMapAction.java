@@ -131,7 +131,9 @@ public class DragBaiduMapAction implements DragActionInterface, BaiduGeoCode.Geo
 
     @Override
     public void showCircleByInfo(double latitude, double longitude, int radius, String info) {
-
+        if (null != mBaiduShowLabel) {
+            mBaiduShowLabel.showMapCircleByRadius(latitude,longitude,radius,info);
+        }
     }
 
     @Override

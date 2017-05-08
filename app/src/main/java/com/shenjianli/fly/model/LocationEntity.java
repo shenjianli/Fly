@@ -129,4 +129,7 @@ public class LocationEntity {
         this.info = info;
     }
 
+    public boolean isValid() {
+        return log != 0 && lat != 0;
+    }
 }
