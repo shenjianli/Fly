@@ -68,5 +68,6 @@ public class QuotePresenter extends BasePresenter<QuoteView> {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(quoteSubscriber);
+
     }
 }
