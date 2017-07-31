@@ -21,7 +21,7 @@
                 android:id="@+id/project_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icbc_baidu_location_lable"/>
+                android:src="@drawable/baidu_location_lable"/>
 
             <TextView
                 android:id="@+id/project_name"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/icbc_baidu_location_lable"/>
+                android:src="@drawable/baidu_location_lable"/>
             <TextView
                 android:id="@+id/location_address"
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/icbc_baidu_location_lable"/>
+                android:src="@drawable/baidu_location_lable"/>
         </RelativeLayout>
     </LinearLayout>
 

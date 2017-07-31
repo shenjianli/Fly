@@ -236,7 +236,7 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
 //            public void run() {
 //                super.run();
 //
-//                String url = "http://m.mall.icbc.com.cn/mobile/indexSlide.jhtml";
+//
 //                Request request = new Request.Builder()
 //                        .url(url)
 //                        .build();

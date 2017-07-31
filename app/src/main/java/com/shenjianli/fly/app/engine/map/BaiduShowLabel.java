@@ -69,7 +69,7 @@ public class BaiduShowLabel {
 		LatLng point = new LatLng(lat, log);  
 		//构建Marker图标  
 		BitmapDescriptor bitmap = BitmapDescriptorFactory  
-		    .fromResource(R.drawable.icbc_baidu_location_lable);
+		    .fromResource(R.drawable.baidu_location_lable);
 		//构建MarkerOption，用于在地图上添加Marker  
 		OverlayOptions option = new MarkerOptions()  
 		    .position(point)  
@@ -80,7 +80,7 @@ public class BaiduShowLabel {
 		if(!TextUtils.isEmpty(title)){
 			TextView tv = new TextView(mContext);
 			tv.setTextColor(Color.WHITE);
-			tv.setBackgroundResource(R.drawable.icbc_baidu_location_label_text_bg);
+			tv.setBackgroundResource(R.drawable.baidu_location_label_text_bg);
 			tv.setText(title);
 			LatLng ll = mMarker.getPosition();
 			InfoWindow mInfoWindow = new InfoWindow(tv, ll, -50);
@@ -118,7 +118,7 @@ public class BaiduShowLabel {
 		LatLng point = new LatLng(lat, log);  
 		//构建Marker图标  
 		BitmapDescriptor bitmap = BitmapDescriptorFactory  
-		    .fromResource(R.drawable.icbc_baidu_location_lable);  
+		    .fromResource(R.drawable.baidu_location_lable);
 		//构建MarkerOption，用于在地图上添加Marker  
 		OverlayOptions option = new MarkerOptions()  
 		    .position(point)  
@@ -129,7 +129,7 @@ public class BaiduShowLabel {
 		if(!TextUtils.isEmpty(title)){
 			TextView tv = new TextView(mContext);
 			tv.setTextColor(Color.WHITE);
-			tv.setBackgroundResource(R.drawable.icbc_baidu_location_label_text_bg);
+			tv.setBackgroundResource(R.drawable.baidu_location_label_text_bg);
 			tv.setText(title);
 			LatLng ll = mMarker.getPosition();
 			InfoWindow mInfoWindow = new InfoWindow(tv, ll, -50);
@@ -186,7 +186,7 @@ public class BaiduShowLabel {
 
 		//构建Marker图标
 //		BitmapDescriptor bitmap = BitmapDescriptorFactory
-//				.fromResource(R.drawable.icbc_baidu_location_lable);
+//				.fromResource(R.drawable.baidu_location_lable);
 //		//构建MarkerOption，用于在地图上添加Marker
 //		OverlayOptions option = new MarkerOptions()
 //				.position(llCircle)
@@ -217,7 +217,7 @@ public class BaiduShowLabel {
 
 //		TextView tv = new TextView(mContext);
 //		tv.setTextColor(Color.WHITE);
-//		tv.setBackgroundResource(R.drawable.icbc_baidu_location_label_text_bg);
+//		tv.setBackgroundResource(R.drawable.baidu_location_label_text_bg);
 //		tv.setText("签到区域");
 //		tv.setGravity(Gravity.CENTER);
 //		LatLng ll = mMarker.getPosition();
@@ -241,7 +241,7 @@ public class BaiduShowLabel {
 //
 //		//构建Marker图标
 //		BitmapDescriptor bitmap = BitmapDescriptorFactory
-//				.fromResource(R.drawable.icbc_baidu_location_lable);
+//				.fromResource(R.drawable.baidu_location_lable);
 //		//构建MarkerOption，用于在地图上添加Marker
 //		OverlayOptions option = new MarkerOptions()
 //				.position(llCircle)
@@ -252,7 +252,7 @@ public class BaiduShowLabel {
 //
 //		TextView tv = new TextView(mContext);
 //		tv.setTextColor(Color.WHITE);
-//		tv.setBackgroundResource(R.drawable.icbc_baidu_location_label_text_bg);
+//		tv.setBackgroundResource(R.drawable.baidu_location_label_text_bg);
 //		tv.setText("签到区域");
 //		tv.setGravity(Gravity.CENTER);
 //		LatLng ll = mMarker.getPosition();
@@ -285,7 +285,7 @@ public class BaiduShowLabel {
 
 		//构建Marker图标
 		BitmapDescriptor bitmap = BitmapDescriptorFactory
-				.fromResource(R.drawable.icbc_baidu_location_lable);
+				.fromResource(R.drawable.baidu_location_lable);
 		//构建MarkerOption，用于在地图上添加Marker
 		OverlayOptions option = new MarkerOptions()
 				.position(llCircle)
@@ -323,7 +323,7 @@ public class BaiduShowLabel {
 		return icon;
 	}
 	private Bitmap drawbitmap() {
-		Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.icbc_baidu_location_label_text_bg);
+		Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.baidu_location_label_text_bg);
 		int width = photo.getWidth();
 		int hight = photo.getHeight();
 		Bitmap newb = Bitmap.createBitmap(width, hight, Bitmap.Config.ARGB_8888);

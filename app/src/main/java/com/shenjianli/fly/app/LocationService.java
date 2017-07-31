@@ -48,7 +48,7 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtils.v("ServiceDemo onStartCommand");
-        FileUtils.writeFile("location serviced onStartCommand()".getBytes(),"icbc","shen.txt");
+        FileUtils.writeFile("location serviced onStartCommand()".getBytes(),"shen","shen.txt");
         return START_STICKY;
     }
 
@@ -71,7 +71,7 @@ public class LocationService extends Service implements BaiduLocation.LocationRe
     public void onDestroy() {
         super.onDestroy();
         LogUtils.i("location serviced onDestory()");
-        FileUtils.writeFile("location serviced onDestory()".getBytes(),"icbc","shen.txt");
+        FileUtils.writeFile("location serviced onDestory()".getBytes(),"shen","shen.txt");
     }
 
     @Override
