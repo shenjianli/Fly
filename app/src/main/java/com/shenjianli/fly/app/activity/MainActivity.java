@@ -167,6 +167,7 @@ public class MainActivity extends BaseActivity implements NetBroadcastReceiver.N
 
         // 设置布局管理器
         flyRecyclerView.setLayoutManager(linearLayoutManager);
+
         DividerDecoration decoration = new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
         Drawable drawable = getResources().getDrawable(R.drawable.divider_single);
         decoration.setDivider(drawable);
